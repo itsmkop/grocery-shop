@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0b7a3b"/>
+<title>Apni Dukaan</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b7a3b'/%3E%3Cpath d='M16 26h32l-3 22a4 4 0 0 1-4 3H23a4 4 0 0 1-4-3z' fill='%23fff'/%3E%3Cpath d='M24 26a8 8 0 0 1 16 0' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<style>
+:root{--g:#0b7a3b;--g2:#0a6a33;--bg:#f4f6f4;--card:#fff;--tx:#15231a;--mut:#6b7a70;--line:#e3e8e3;--red:#d33;--amber:#c47f00}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;background:var(--bg);color:var(--tx);padding-bottom:70px}
+img{display:block}
+button{font:inherit;cursor:pointer}
+.hidden{display:none!important}
+header.top{position:sticky;top:0;z-index:20;background:linear-gradient(160deg,var(--g),var(--g2));color:#fff;padding:14px 14px 10px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:48px;height:48px;border-radius:12px;object-fit:cover;background:#fff;flex:0 0 auto}
+.brand .ph{width:48px;height:48px;border-radius:12px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:26px;flex:0 0 auto}
+.brand h1{font-size:19px;margin:0;line-height:1.15;font-weight:700}
+.brand p{margin:2px 0 0;font-size:12.5px;opacity:.9}
+.meta{margin-top:9px;font-size:12.5px;opacity:.95;line-height:1.5;display:flex;flex-wrap:wrap;gap:4px 14px}
+.meta a{color:#fff;text-decoration:none}
+.searchbar{display:flex;gap:8px;margin-top:11px}
+.searchbar input{flex:1;border:0;border-radius:11px;padding:12px 14px;font-size:15px;background:#fff;color:#15231a;outline:none}
+.searchbar .ic{width:46px;border:0;border-radius:11px;background:rgba(255,255,255,.2);color:#fff;font-size:19px}
+.chips{display:flex;gap:8px;overflow-x:auto;margin-top:11px;padding-bottom:4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:7px 14px;font-size:13px}
+.chip.on{background:#fff;color:var(--g);font-weight:700;border-color:#fff}
+.tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);padding:9px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:15}
+.tools select{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-size:13.5px;color:var(--tx)}
+.tools label{font-size:13px;color:var(--mut);display:flex;align-items:center;gap:5px}
+.tools .cnt{margin-left:auto;font-size:12.5px;color:var(--mut)}
+main{padding:12px;display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+@media(min-width:620px){main{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){main{grid-template-columns:repeat(4,1fr);max-width:1180px;margin:0 auto}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.card:active{transform:scale(.985)}
+.thumb{width:100%;aspect-ratio:1/1;object-fit:cover;background:#eef2ee}
+.thumb.ph{display:flex;align-items:center;justify-content:center;font-size:38px;color:#b9c6bd}
+.card .body{padding:9px 10px 11px;display:flex;flex-direction:column;gap:3px;flex:1}
+.card .nm{font-size:14px;font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .br{font-size:11.5px;color:var(--mut)}
+.priceRow{display:flex;align-items:baseline;gap:6px;margin-top:auto;padding-top:5px;flex-wrap:wrap}
+.price{font-size:16px;font-weight:800;color:var(--g)}
+.mrp{font-size:12px;color:var(--mut);text-decoration:line-through}
+.off{font-size:11px;font-weight:700;color:#0a7d3b;background:#e7f6ec;border-radius:6px;padding:1px 5px}
+.unit{font-size:11.5px;color:var(--mut)}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px}
+.bdg{font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 6px}
+.bdg.out{background:#fdeaea;color:var(--red)}
+.bdg.low{background:#fff4e0;color:var(--amber)}
+.bdg.in{background:#e7f6ec;color:#0a7d3b}
+.bdg.exp{background:#fdeaea;color:var(--red)}
+.bdg.soon{background:#fff4e0;color:var(--amber)}
+.fav{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.92);border-radius:999px;padding:4px 8px;font-size:11px;font-weight:700;color:var(--g)}
+.empty{text-align:center;padding:60px 24px;color:var(--mut);grid-column:1/-1}
+.empty .big{font-size:46px;margin-bottom:10px}
+footer.foot{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:8px 14px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--mut);z-index:18}
+.dot{width:8px;height:8px;border-radius:50%;background:#bbb;flex:0 0 auto}
+.dot.ok{background:#1aa251}.dot.bad{background:#d33}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(10,20,14,.55);display:flex;align-items:flex-end;justify-content:center}
+@media(min-width:620px){.modal{align-items:center}}
+.sheet{background:#fff;width:100%;max-width:520px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0}
+@media(min-width:620px){.sheet{border-radius:18px}}
+.sheet .hero{width:100%;aspect-ratio:4/3;object-fit:cover;background:#eef2ee}
+.sheet .hero.ph{display:flex;align-items:center;justify-content:center;font-size:70px;color:#c3cfc7}
+.sheet .in{padding:16px}
+.sheet h2{margin:0 0 2px;font-size:20px}
+.sheet .close{position:sticky;top:0;float:right;margin:10px;background:rgba(0,0,0,.45);color:#fff;border:0;border-radius:999px;width:34px;height:34px;font-size:18px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:12px 0;font-size:13.5px}
+.kv dt{color:var(--mut)}
+.kv dd{margin:0;text-align:right;font-weight:600}
+.acts{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}
+.acts a,.acts button{flex:1;min-width:130px;text-align:center;text-decoration:none;border:0;border-radius:11px;padding:13px;font-weight:700;font-size:14.5px}
+.btn-call{background:#eef2ee;color:var(--tx)}
+.btn-wa{background:#1aa251;color:#fff}
+.btn-upi{background:var(--g);color:#fff}
+.note{font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <div id="logoBox"></div>
+    <div>
+      <h1 id="shopName">Apni Dukaan</h1>
+      <p id="tagline">Aapki apni grocery shop</p>
+    </div>
+  </div>
+  <div class="meta" id="shopMeta"></div>
+  <div class="searchbar">
+    <input id="q" placeholder="Saman dhundein... (naam / brand)" autocomplete="off"/>
+    <button class="ic" id="refresh" title="Refresh">&#8635;</button>
+  </div>
+  <div class="chips" id="cats"></div>
+</header>
+
+<div class="tools">
+  <select id="sort">
+    <option value="name">Naam (A-Z)</option>
+    <option value="priceL">Price: kam se zyada</option>
+    <option value="priceH">Price: zyada se kam</option>
+    <option value="new">Naye pehle</option>
+  </select>
+  <label><input type="checkbox" id="inStock"/> Sirf stock me</label>
+  <span class="cnt" id="count"></span>
+</div>
+
+<main id="grid"></main>
+
+<footer class="foot">
+  <span class="dot" id="dot"></span>
+  <span id="status">Load ho raha hai...</span>
+  <span style="margin-left:auto" id="updated"></span>
+</footer>
+
+<div class="modal hidden" id="modal">
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<script>
+var API='https://api.github.com';
+var DEFAULT_SRC='https://raw.githubusercontent.com/itsmkop/grocery-shop/main/data.json';
+var SRC=(new URLSearchParams(location.search).get('src'))||localStorage.getItem('gs_src')||DEFAULT_SRC;
+var DATA=null, view={q:'',cat:'',sort:'name',inStock:false}, timer=null;
+
+function $(s){return document.querySelector(s)}
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function money(n){if(n===''||n==null)return '';var c=(DATA&&DATA.shop&&DATA.shop.currency)||'\u20B9';return c+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2})}
+function daysLeft(d){if(!d)return null;var t=new Date();t.setHours(0,0,0,0);var e=new Date(d);if(isNaN(e))return null;e.setHours(0,0,0,0);return Math.round((e-t)/86400000)}
+function fmtDate(d){if(!d)return '';var e=new Date(d);if(isNaN(e))return d;return e.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}
+
+function setStatus(txt,cls){$('#status').textContent=txt;$('#dot').className='dot '+(cls||'')}
+
+function loadData(){
+  setStatus('Naya data la rahe hain...','');
+  var url=SRC+(SRC.indexOf('?')>-1?'&':'?')+'t='+Date.now();
+  fetch(url,{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(function(d){
+    DATA=d; try{localStorage.setItem('gs_cache',JSON.stringify(d))}catch(e){}
+    setStatus('Live \u2014 online','ok');
+    if(d.meta&&d.meta.updatedAt){$('#updated').textContent='Updated: '+new Date(d.meta.updatedAt).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}
+    renderAll();
+  }).catch(function(err){
+    var c=localStorage.getItem('gs_cache');
+    if(c){DATA=JSON.parse(c);setStatus('Offline copy dikha rahe hain','bad');renderAll();}
+    else{setStatus('Data nahi mila','bad');$('#grid').innerHTML='<div class="empty"><div class="big">\uD83D\uDED2</div><b>Dukaan abhi taiyaar ho rahi hai</b><div style="margin-top:8px">Thodi der baad phir kholiye.</div></div>'}
+  });
+}
+
+function shopHeader(){
+  var s=(DATA&&DATA.shop)||{};
+  $('#shopName').textContent=s.name||'Apni Dukaan';
+  $('#tagline').textContent=s.tagline||'';
+  var lb=$('#logoBox');
+  if(s.logo){lb.innerHTML='<img class="logo" src="'+esc(s.logo)+'" alt=""/>'}
+  else{lb.innerHTML='<div class="ph">\uD83D\uDED2</div>'}
+  var m=[];
+  if(s.hours)m.push('\uD83D\uDD52 '+esc(s.hours));
+  if(s.phone)m.push('<a href="tel:'+esc(s.phone)+'">\uD83D\uDCDE '+esc(s.phone)+'</a>');
+  if(s.address)m.push('\uD83D\uDCCD '+esc(s.address));
+  $('#shopMeta').innerHTML=m.join('');
+}
+
+function cats(){
+  var s=(DATA&&DATA.shop)||{};
+  var list=(s.categories||[]).slice();
+  var used={}; (DATA.products||[]).forEach(function(p){if(p.category&&!used[p.category]){used[p.category]=1;if(list.indexOf(p.category)<0)list.push(p.category)}});
+  var html='<div class="chip'+(view.cat?'':' on')+'" data-cat="">Sab</div>';
+  list.forEach(function(c){html+='<div class="chip'+(view.cat===c?' on':'')+'" data-cat="'+esc(c)+'">'+esc(c)+'</div>'});
+  $('#cats').innerHTML=html;
+  [].forEach.call($('#cats').children,function(el){el.onclick=function(){view.cat=el.getAttribute('data-cat');cats();grid()}});
+}
+
+function stockInfo(p){
+  var s=(DATA&&DATA.shop)||{};var low=s.lowStock||5;
+  if(p.available===false||p.stock===0||p.stock==='0')return{k:'out',t:'Stock khatam'};
+  if(p.stock!==''&&p.stock!=null&&Number(p.stock)<=low)return{k:'low',t:'Sirf '+p.stock+' bache'};
+  return{k:'in',t:'Stock me'};
+}
+
+function grid(){
+  var ps=(DATA&&DATA.products)||[];
+  var q=view.q.toLowerCase().trim();
+  var out=ps.filter(function(p){
+    if(view.cat&&p.category!==view.cat)return false;
+    if(view.inStock&&stockInfo(p).k==='out')return false;
+    if(q){var hay=((p.name||'')+' '+(p.brand||'')+' '+(p.tags||'')+' '+(p.category||'')).toLowerCase();if(hay.indexOf(q)<0)return false}
+    return true;
+  });
+  if(view.sort==='priceL')out.sort(function(a,b){return (Number(a.price)||0)-(Number(b.price)||0)});
+  else if(view.sort==='priceH')out.sort(function(a,b){return (Number(b.price)||0)-(Number(a.price)||0)});
+  else if(view.sort==='new')out.sort(function(a,b){return new Date(b.createdAt||0)-new Date(a.createdAt||0)});
+  else out.sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
+  $('#count').textContent=out.length+' item';
+  if(!out.length){$('#grid').innerHTML='<div class="empty"><div class="big">\uD83D\uDD0D</div><b>Kuch nahi mila</b><div style="margin-top:8px">Doosra naam ya category try kijiye.</div></div>';return}
+  $('#grid').innerHTML=out.map(cardHTML).join('');
+  [].forEach.call($('#grid').children,function(el){el.onclick=function(){openProduct(el.getAttribute('data-id'))}});
+}
+
+function cardHTML(p){
+  var si=stockInfo(p);
+  var disc=(p.mrp&&p.price&&Number(p.mrp)>Number(p.price))?Math.round((1-Number(p.price)/Number(p.mrp))*100):0;
+  var dl=daysLeft(p.expiry);
+  var img=p.photo?'<img class="thumb" loading="lazy" src="'+esc(p.photo)+'" alt="'+esc(p.name)+'"/>':'<div class="thumb ph">\uD83D\uDED2</div>';
+  var b='<span class="bdg '+si.k+'">'+si.t+'</span>';
+  if(dl!=null){if(dl<0)b+='<span class="bdg exp">Expired</span>';else if(dl<=(DATA.shop.expiryDays||30))b+='<span class="bdg soon">'+dl+' din me expire</span>'}
+  return '<div class="card" data-id="'+esc(p.id)+'">'+img+
+    (p.featured?'<div class="fav">\u2B50 Top</div>':'')+
+    '<div class="body"><div class="nm">'+esc(p.name)+'</div>'+
+    (p.brand?'<div class="br">'+esc(p.brand)+'</div>':'')+
+    '<div class="priceRow"><span class="price">'+money(p.price)+'</span>'+
+    (disc>0?'<span class="mrp">'+money(p.mrp)+'</span><span class="off">'+disc+'% off</span>':'')+
+    '</div>'+(p.unit?'<div class="unit">'+esc(p.unit)+'</div>':'')+
+    '<div class="badges">'+b+'</div></div></div>';
+}
+
+function openProduct(id){
+  var p=(DATA.products||[]).filter(function(x){return x.id===id})[0];if(!p)return;
+  var s=DATA.shop||{};var si=stockInfo(p);
+  var dl=daysLeft(p.expiry);
+  var disc=(p.mrp&&p.price&&Number(p.mrp)>Number(p.price))?Math.round((1-Number(p.price)/Number(p.mrp))*100):0;
+  var wa=(s.whatsapp||s.phone||'').replace(/[^0-9]/g,'');
+  var txt=encodeURIComponent('Namaste! Mujhe ye chahiye: '+p.name+(p.brand?' ('+p.brand+')':'')+' - '+money(p.price));
+  var upi=s.upi?('upi://pay?pa='+encodeURIComponent(s.upi)+'&pn='+encodeURIComponent(s.name||'Shop')+'&am='+(Number(p.price)||0)+'&cu=INR&tn='+encodeURIComponent(p.name)):'';
+  var hero=p.photo?'<img class="hero" src="'+esc(p.photo)+'" alt=""/>':'<div class="hero ph">\uD83D\uDED2</div>';
+  var kv='';
+  kv+=row('Price',money(p.price));
+  if(disc>0)kv+=row('MRP',money(p.mrp)+' ('+disc+'% off)');
+  if(p.unit)kv+=row('Pack',p.unit);
+  if(p.category)kv+=row('Category',p.category);
+  kv+=row('Availability',si.t);
+  if(dl!=null)kv+=row('Expiry',fmtDate(p.expiry)+(dl<0?' (Expired)':''));
+  if(p.desc)kv+=row('Details',p.desc);
+  var acts='';
+  if(s.phone)acts+='<a class="btn-call" href="tel:'+esc(s.phone)+'">\uD83D\uDCDE Call</a>';
+  if(wa)acts+='<a class="btn-wa" href="https://wa.me/'+wa+'?text='+txt+'" target="_blank" rel="noopener">\uD83D\uDCAC WhatsApp order</a>';
+  if(upi)acts+='<a class="btn-upi" href="'+upi+'">\uD83D\uDCB3 UPI pay '+money(p.price)+'</a>';
+  $('#sheet').innerHTML='<button class="close" onclick="closeModal()">\u2715</button>'+hero+'<div class="in"><h2>'+esc(p.name)+'</h2>'+(p.brand?'<div class="br" style="font-size:13px;color:#6b7a70">'+esc(p.brand)+'</div>':'')+'<dl class="kv">'+kv+'</dl><div class="acts">'+acts+'</div><div class="note">Order ya price confirm karne ke liye dukaan se sampark kijiye.</div></div>';
+  $('#modal').classList.remove('hidden');
+}
+function row(k,v){return '<dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd>'}
+function closeModal(){$('#modal').classList.add('hidden')}
+$('#modal').addEventListener('click',function(e){if(e.target.id==='modal')closeModal()});
+
+function renderAll(){shopHeader();cats();grid()}
+
+$('#q').addEventListener('input',function(e){view.q=e.target.value;grid()});
+$('#sort').addEventListener('change',function(e){view.sort=e.target.value;grid()});
+$('#inStock').addEventListener('change',function(e){view.inStock=e.target.checked;grid()});
+$('#refresh').addEventListener('click',loadData);
+
+loadData();
+timer=setInterval(loadData,180000);
+document.addEventListener('visibilitychange',function(){if(!document.hidden)loadData()});
+</script>
+</body>
+</html>
