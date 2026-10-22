@@ -133,7 +133,7 @@ function timeNow(){return new Date().toLocaleString('en-IN',{day:'2-digit',month
 
 function DEFAULT(){
   return {meta:{version:1,updatedAt:new Date().toISOString()},
-    shop:{name:'Apni Dukaan',owner:'',phone:'',whatsapp:'',address:'',tagline:'Aapki apni grocery shop',upi:'',gstin:'',hours:'8:00 AM - 9:00 PM',logo:'',currency:'\u20B9',lowStock:5,expiryDays:30,
+    shop:{name:'Apni Dukaan',owner:'',phone:'',whatsapp:'',address:'',tagline:'Aapki apni grocery shop',upi:'',gstin:'',hours:'8:00 AM - 9:00 PM',logo:'',currency:'\u20B9',lowStock:5,expiryDays:30,offerBanner:'',deliveryNote:'',deliveryCharge:0,
       categories:['Atta & Rice','Dal & Pulses','Oil & Ghee','Masala & Spices','Snacks','Dairy','Beverages','Personal Care','Household','Other']},
     products:[]};
 }
@@ -289,6 +289,9 @@ function renderSet(){
    '<div class="field"><label class="f">Kam stock alert</label><input id="s_low" inputmode="numeric" value="'+esc(s.lowStock)+'"/></div>'+
    '<div class="field"><label class="f">Expiry alert (din)</label><input id="s_exp" inputmode="numeric" value="'+esc(s.expiryDays)+'"/></div></div>'+
    '<div class="field"><label class="f">Currency symbol</label><input id="s_cur" value="'+esc(s.currency)+'"/></div>'+
+   '<div class="field"><label class="f">Offer banner (public app me upar dikhega)</label><input id="s_offer" value="'+esc(s.offerBanner)+'" placeholder="jaise: Aaj 10% off sab par!"/></div>'+
+   '<div class="field"><label class="f">Delivery note</label><input id="s_deliv" value="'+esc(s.deliveryNote)+'" placeholder="jaise: 500 se upar free delivery"/></div>'+
+   '<div class="field"><label class="f">Delivery charge (\u20B9, 0 = free)</label><input id="s_delc" inputmode="numeric" value="'+esc(s.deliveryCharge)+'"/></div>'+
    '<button class="btn full" onclick="saveSet()">Save karein</button></div>'+
    '<h3 class="sec" style="margin-top:18px">Admin PIN</h3><div class="card"><div class="row2"><input id="newPin" type="password" placeholder="Naya PIN"/><button class="btn" onclick="changePin()">Badlein</button></div><div class="note" style="margin-top:8px">Abhi ka PIN: '+getPin()+'</div></div>'+
    '<h3 class="sec" style="margin-top:18px">Backup</h3><div class="card"><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="btn gray sm" onclick="exportJSON()">\u2B07 JSON backup</button><button class="btn gray sm" onclick="exportCSV()">\u2B07 CSV</button><button class="btn gray sm" onclick="$(\'impFile\').click()">\u2B06 JSON import</button><input type="file" id="impFile" accept=".json" class="hidden"/></div></div>';
@@ -298,7 +301,7 @@ function renderSet(){
 function saveSet(){
   var s=DATA.shop;
   s.name=val('#s_name');s.tagline=val('#s_tagline');s.logo=val('#s_logo');s.phone=val('#s_phone');s.whatsapp=val('#s_whatsapp');
-  s.address=val('#s_address');s.hours=val('#s_hours');s.upi=val('#s_upi');s.gstin=val('#s_gstin');s.lowStock=Number(val('#s_low'))||5;s.expiryDays=Number(val('#s_exp'))||30;s.currency=val('#s_cur')||'\u20B9';
+  s.address=val('#s_address');s.hours=val('#s_hours');s.upi=val('#s_upi');s.gstin=val('#s_gstin');s.lowStock=Number(val('#s_low'))||5;s.expiryDays=Number(val('#s_exp'))||30;s.currency=val('#s_cur')||'\u20B9';s.offerBanner=val('#s_offer');s.deliveryNote=val('#s_deliv');s.deliveryCharge=Number(val('#s_delc'))||0;
   saveData();alert('Save ho gaya \u2713');
 }
 function changePin(){var v=$('#newPin').value.trim();if(v.length<4){alert('Kam se kam 4 ank');return}localStorage.setItem(PIN_KEY,v);$('#newPin').value='';alert('PIN badal gaya \u2713')}
