@@ -150,13 +150,14 @@ function unlock(){sessionStorage.setItem('gs_open','1');$('#gate').classList.add
 $('#pinGo').onclick=function(){if($('#pinIn').value.trim()===getPin())unlock();else{alert('Galat PIN')}};
 $('#pinIn').addEventListener('keydown',function(e){if(e.key==='Enter')$('#pinGo').click()});
 $('#btnLock').onclick=function(){sessionStorage.removeItem('gs_open');location.reload()};
-$('#btnSave').onclick=function(){saveData();cloudPush(false)};
+$('#btnSave').onclick=function(){saveData();if(CFG.token){cloudPush(false)}else{syncMsg='\u2705 Local save ho gaya. Ab ise online bhejne ke liye Cloud tab me token daaliye.';tab='cloud';renderTabs();render()}};
 
 /* ---------- tabs ---------- */
 var TABS=[['dash','\uD83D\uDCCA Dashboard'],['prod','\uD83D\uDCE6 Items'],['cats','\uD83C\uDFF7\uFE0F Category'],['set','\u2699\uFE0F Dukaan'],['cloud','\u2601\uFE0F Cloud']];
 function renderTabs(){$('#tabs').innerHTML=TABS.map(function(t){return '<button class="'+(tab===t[0]?'on':'')+'" data-t="'+t[0]+'">'+t[1]+'</button>'}).join('');
   [].forEach.call($('#tabs').children,function(b){b.onclick=function(){tab=b.getAttribute('data-t');renderTabs();render()}});}
 function render(){$('#hName').textContent=DATA.shop.name||'Apni Dukaan';
+  $('#hSync').textContent=CFG.token?'\u2705 Online juda hua':'\u26A0\uFE0F Token chahiye (Cloud tab)';
   if(tab==='dash')renderDash();else if(tab==='prod')renderProd();else if(tab==='cats')renderCats();else if(tab==='set')renderSet();else renderCloud();}
 
 /* ---------- dashboard ---------- */
@@ -312,7 +313,7 @@ function renderCloud(){
    '<div class="banner '+(ready?'ok':'warn')+'">'+(ready?'\u2705 Cloud juda hua hai. Data apne-aap online save hota hai.'+ (CFG.lastSync?' Last: '+timeNow():'') :'\u26A0\uFE0F Ek baar GitHub token daaliye, uske baad sab automatic chalega.')+'</div>'+
    '<div class="card"><h3 class="sec">Cloud settings</h3>'+
    '<div class="note" style="margin-bottom:10px">Owner: <b>'+esc(CFG.owner)+'</b> &middot; Repo: <b>'+esc(CFG.repo)+'</b> &middot; File: <b>'+esc(CFG.path)+'</b></div>'+
-   '<div class="field"><label class="f">GitHub Token (ek baar)</label><input id="c_token" type="password" placeholder="ghp_... ya github_pat_..." value="'+esc(CFG.token)+'"/></div>'+
+   '<a class="btn full" style="display:block;text-align:center;text-decoration:none;margin-bottom:12px" href="https://github.com/settings/tokens/new?scopes=public_repo&description=Apni%20Dukaan" target="_blank" rel="noopener">\uD83D\uDD11 Token banayein (GitHub kholiye)</a>'+'<div class="field"><label class="f">Token (copy karke yahan paste karein)</label><input id="c_token" type="password" placeholder="ghp_... ya github_pat_..." value="'+esc(CFG.token)+'"/></div>'+
    '<label class="switch"><input type="checkbox" id="c_auto"'+(CFG.autoPush?' checked':'')+'/> Har save par apne-aap online bhejein (auto-sync)</label>'+
    '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:10px"><button class="btn" onclick="saveCloud()">Save token</button><button class="btn gray" onclick="cloudPush(false)">\u2601 Push (bhejein)</button><button class="btn gray" onclick="cloudPull()">\u2B07 Pull (laein)</button></div>'+
    '<div class="syncbar" id="syncMsg" style="margin-top:10px">'+esc(syncMsg||'')+'</div></div>'+
@@ -354,7 +355,7 @@ async function cloudPull(){
 function schedulePush(){if(!CFG.autoPush||!CFG.token)return;clearTimeout(pushTimer);pushTimer=setTimeout(function(){cloudPush(true)},1800)}
 
 /* ---------- boot ---------- */
-function boot(){loadCfg();loadData();renderTabs();render();setSync(CFG.lastSync?'Last sync: '+timeNow():'');}
+function boot(){loadCfg();loadData();if(!CFG.token)tab='cloud';renderTabs();render();if(CFG.token)setSync(CFG.lastSync?'Last sync: '+timeNow():'');}
 loadCfg();loadData();
 if(sessionStorage.getItem('gs_open')==='1')unlock();else{$('#pinIn').focus()}
 </script>
