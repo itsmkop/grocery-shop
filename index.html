@@ -125,6 +125,20 @@ nav.bn .badge{position:absolute;top:-1px;right:calc(50% - 20px);background:var(-
 .note{font-size:12px;color:var(--mut);line-height:1.5}
 .chip{display:inline-block;background:#eef2fb;color:var(--brand);font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;margin:2px 4px 2px 0}
 .shopcard{background:#fff;border-radius:14px;padding:16px;margin:10px 12px}
+.hd .search{position:relative}
+.sugg{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;border-radius:12px;box-shadow:0 12px 34px rgba(0,0,0,.2);overflow-y:auto;max-height:60vh;z-index:40}
+.sug{display:flex;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line)}
+.sug img,.sug .ph{width:38px;height:38px;border-radius:8px;object-fit:cover;background:#f0f2f6;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.sug .sn{font-size:13.5px;font-weight:600;color:var(--tx)}
+.sug .sp{font-size:12px;color:var(--mut)}
+.lbl{display:block;font-size:12.5px;color:var(--mut);margin-bottom:5px;font-weight:600}
+.field{margin-bottom:12px}
+.sheet input,.sheet textarea,.sheet select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:inherit;background:#fff;color:var(--tx);outline:none}
+.sheet input:focus,.sheet textarea:focus,.sheet select:focus{border-color:var(--brand)}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:11px;font-size:13.5px;font-weight:700;color:var(--mut)}
+.seg button.on{border-color:var(--brand);color:var(--brand);background:#eef3ff}
+.ordcard{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
 </style>
 </head>
 <body>
@@ -143,6 +157,7 @@ nav.bn .badge{position:absolute;top:-1px;right:calc(50% - 20px);background:var(-
       <span>&#128269;</span>
       <input id="q" placeholder="Atta, tel, dudh... dhundein" autocomplete="off"/>
       <button id="refresh" title="Refresh" style="font-size:17px;color:var(--brand)">&#8635;</button>
+      <div class="sugg hidden" id="sugg"></div>
     </div>
   </div>
   <div class="locbar" id="locbar"></div>
@@ -361,7 +376,7 @@ function renderShop(){
    '</dl><div class="acts">'+
    (s.phone?'<a class="b-call" href="tel:'+esc(s.phone)+'">\uD83D\uDCDE Call</a>':'')+
    (s.whatsapp?'<a class="b-wa" href="https://wa.me/'+String(s.whatsapp).replace(/[^0-9]/g,'')+'" target="_blank" rel="noopener">\uD83D\uDCAC WhatsApp</a>':'')+
-   '</div></div><div class="wrap"><div class="note" style="text-align:center;padding:10px">Rates aur stock live update hote rehte hain.</div></div>';
+   '</div><button class="b-call" style="width:100%;margin-top:14px;padding:13px;border-radius:11px;font-weight:800" onclick="openMyOrders()">\uD83D\uDCE6 Mere orders</button></div><div class="wrap"><div class="note" style="text-align:center;padding:10px">Rates aur stock live update hote rehte hain.</div></div>';
 }
 function row(k,v){return '<dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd>'}
 
@@ -412,7 +427,7 @@ function openCart(){
       (t.save>0?'<div class="sum" style="color:var(--green)"><span>Bachat</span><span>\u2212 '+money(t.save)+'</span></div>':'')+
       (del?'<div class="sum"><span>Delivery</span><span>'+money(del)+'</span></div>':'')+
       '<div class="sum tot"><span>Total</span><span>'+money(t.sub+del)+'</span></div></div>'+
-      '<div id="ordBtns" style="margin-top:14px"></div>'+
+      '<button class="b-brand" style="width:100%;margin-top:14px;padding:14px;border-radius:11px;font-weight:800;font-size:15px" onclick="openCheckout()">Checkout karein \u2192</button>'+'<div id="ordBtns" style="margin-top:10px"></div>'+
       '<div class="note" style="margin-top:10px">Order WhatsApp par bhejkar confirm hoga. '+(s.deliveryNote?esc(s.deliveryNote):'')+'</div></div>';
   }
   $('#sheet').setAttribute('data-view','cart');
@@ -439,6 +454,96 @@ function renderOrderBtns(){
   $('#ordBtns').innerHTML=html;
 }
 function copyOrder(){try{navigator.clipboard.writeText(orderText());alert('Order copy ho gaya \u2713')}catch(e){prompt('Copy karein:',orderText())}}
+function val(s){var e=$(s);return e?e.value.trim():''}
+function orderId(){var d=new Date();var p=function(n){return (n<10?'0':'')+n};return 'ORD-'+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+'-'+Math.floor(1000+Math.random()*9000)}
+function loadOrders(){try{return JSON.parse(localStorage.getItem('gs_orders'))||[]}catch(e){return[]}}
+function saveOrder(o){var a=loadOrders();a.push(o);if(a.length>50)a=a.slice(a.length-50);try{localStorage.setItem('gs_orders',JSON.stringify(a))}catch(e){}}
+var CO={type:'delivery',pay:'cod'},LAST_ORDER=null;
+function coType(t){CO.type=t;$('#co_t_del').className=(t==='delivery'?'on':'');$('#co_t_pick').className=(t==='pickup'?'on':'');$('#co_addrWrap').style.display=(t==='delivery'?'':'none')}
+function coPay(p){CO.pay=p;$('#co_p_cod').className=(p==='cod'?'on':'');$('#co_p_upi').className=(p==='upi'?'on':'')}
+function openCheckout(){
+  var s=DATA.shop||{};var ids=Object.keys(CART).filter(function(k){return prodById(k)});
+  if(!ids.length){alert('Cart khali hai');return}
+  CO={type:'delivery',pay:'cod'};
+  $('#sheet').setAttribute('data-view','checkout');
+  $('#sheet').innerHTML='<div class="sh"><b>Checkout</b><button class="x" onclick="closeOv()">\u2715</button></div><div class="in">'+
+   '<div class="field"><label class="lbl">Aapka naam *</label><input id="co_name" placeholder="Naam"/></div>'+
+   '<div class="field"><label class="lbl">Mobile number *</label><input id="co_phone" inputmode="numeric" maxlength="10" placeholder="10 ank ka number"/></div>'+
+   '<div class="field"><label class="lbl">Delivery ya Pickup?</label><div class="seg"><button type="button" class="on" id="co_t_del" onclick="coType(\'delivery\')">\uD83D\uDE9A Ghar delivery</button><button type="button" id="co_t_pick" onclick="coType(\'pickup\')">\uD83C\uDFEA Dukaan se</button></div></div>'+
+   '<div class="field" id="co_addrWrap"><label class="lbl">Poora address *</label><textarea id="co_addr" rows="2" placeholder="Ghar/mohalla, landmark, pincode"></textarea></div>'+
+   '<div class="field"><label class="lbl">Kab chahiye?</label><select id="co_slot"><option>Jaldi (30-60 min)</option><option>Aaj shaam</option><option>Kal subah</option><option>Koi jaldi nahi</option></select></div>'+
+   '<div class="field"><label class="lbl">Payment</label><div class="seg"><button type="button" class="on" id="co_p_cod" onclick="coPay(\'cod\')">\uD83D\uDCB5 Cash (COD)</button><button type="button" id="co_p_upi" onclick="coPay(\'upi\')">\uD83D\uDCF1 UPI</button></div></div>'+
+   '<div class="field"><label class="lbl">Koi note? (optional)</label><input id="co_note" placeholder="jaise: bell baja dena"/></div>'+
+   '<div class="sum tot"><span>Total</span><span id="co_total"></span></div>'+
+   '<button class="b-brand" style="width:100%;padding:14px;border-radius:11px;font-weight:800;font-size:15px;margin-top:8px" onclick="placeOrder()">Order confirm karein</button>'+
+   '<div class="note" style="margin-top:10px">Order dukaan ko WhatsApp par bhejkar confirm hoga.</div></div>';
+  $('#co_total').textContent=money(cartTotals().sub+(num(s.deliveryCharge)||0));
+  openOv();
+}
+function placeOrder(){
+  var s=DATA.shop||{};var ids=Object.keys(CART).filter(function(k){return prodById(k)});
+  if(!ids.length){alert('Cart khali hai');return}
+  var name=val('#co_name');var phone=val('#co_phone').replace(/\D/g,'');var addr=val('#co_addr');
+  if(!name){alert('Naam likhiye');return}
+  if(phone.length<10){alert('Sahi 10-ank ka mobile number likhiye');return}
+  if(CO.type==='delivery'&&!addr){alert('Delivery ke liye address zaroori hai');return}
+  var t=cartTotals();var del=num(s.deliveryCharge)||0;
+  var items=ids.map(function(k){var p=prodById(k);return{name:p.name,unit:p.unit||'',qty:CART[k],price:num(p.price),mrp:num(p.mrp||p.price)}});
+  var o={id:orderId(),at:new Date().toISOString(),items:items,cnt:t.cnt,sub:t.sub,save:t.save,delivery:del,total:t.sub+del,name:name,phone:phone,type:CO.type,address:CO.type==='delivery'?addr:'',slot:val('#co_slot'),pay:CO.pay,note:val('#co_note'),status:'Bheja gaya'};
+  LAST_ORDER=o;saveOrder(o);
+  if(s.orderWebhook){try{fetch(s.orderWebhook,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)})}catch(e){}}
+  CART={};saveCart();updateCartUI();
+  orderSuccess(o);
+}
+function waOrderMsg(o){
+  var L=[];
+  L.push('Namaste! Order: '+o.id);
+  L.push('Naam: '+o.name+' | Mobile: '+o.phone);
+  L.push(o.type==='delivery'?('Delivery: '+o.address):'Pickup (dukaan se le lunga)');
+  if(o.slot)L.push('Time: '+o.slot);
+  L.push('Payment: '+(o.pay==='upi'?'UPI':'Cash'));
+  L.push('---');
+  o.items.forEach(function(it,i){L.push((i+1)+'. '+it.name+(it.unit?' ('+it.unit+')':'')+' x '+it.qty+' = '+money(it.price*it.qty))});
+  L.push('---');L.push('Total: '+money(o.total));
+  if(o.note)L.push('Note: '+o.note);
+  return L.join('\n');
+}
+function orderSuccess(o){
+  var s=DATA.shop||{};var wa=String(s.whatsapp||s.phone||'').replace(/[^0-9]/g,'');
+  var rows=o.items.map(function(it){return '<div class="sum"><span>'+esc(it.name)+' \u00D7 '+it.qty+'</span><span>'+money(it.price*it.qty)+'</span></div>'}).join('');
+  $('#sheet').setAttribute('data-view','success');
+  $('#sheet').innerHTML='<div class="in" style="text-align:center"><div style="font-size:52px">\u2705</div>'+
+   '<h2 style="margin:6px 0 2px">Order taiyaar!</h2><div class="note">Order ID: <b>'+esc(o.id)+'</b></div>'+
+   '<div style="text-align:left;margin-top:14px;background:#f7f9fc;border-radius:12px;padding:12px">'+rows+
+   '<div class="sum"><span>Delivery</span><span>'+(o.delivery?money(o.delivery):'Free')+'</span></div>'+
+   '<div class="sum tot"><span>Total</span><span>'+money(o.total)+'</span></div>'+
+   '<div class="note" style="margin-top:8px">'+esc(o.name)+' \u00B7 '+esc(o.phone)+'<br>'+esc(o.type==='delivery'?o.address:'Dukaan se pickup')+'</div></div>'+
+   '<div style="margin-top:14px">'+(wa?'<a class="b-wa" style="display:block;margin-bottom:9px" href="https://wa.me/'+wa+'?text='+encodeURIComponent(waOrderMsg(o))+'" target="_blank" rel="noopener">\uD83D\uDCAC Order WhatsApp par bhejein</a>':'')+
+   '<button class="b-call" style="width:100%" onclick="copyText(waOrderMsg(LAST_ORDER))">\uD83D\uDCCB Order copy karein</button></div>'+
+   '<button class="b-brand" style="width:100%;margin-top:9px;padding:13px;border-radius:11px;font-weight:800" onclick="closeOv()">Aur shopping karein</button></div>';
+  openOv();
+}
+function copyText(t){try{navigator.clipboard.writeText(t);alert('Copy ho gaya \u2713')}catch(e){prompt('Copy karein:',t)}}
+function openMyOrders(){
+  var os=loadOrders();var body;
+  if(!os.length){body='<div class="in"><div class="empty"><div class="big">\uD83D\uDCE6</div><b>Abhi koi order nahi</b><div style="margin-top:6px">Order karne par yahan dikhega.</div></div></div>'}
+  else{body='<div class="in">'+os.slice().reverse().map(function(o){
+     return '<div class="ordcard"><div style="display:flex;justify-content:space-between;align-items:center"><b>'+esc(o.id)+'</b><span class="chip">'+esc(o.status||'')+'</span></div><div class="note">'+new Date(o.at).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+' \u00B7 '+o.cnt+' item</div><div style="font-weight:800;margin-top:4px">'+money(o.total)+'</div><button class="b-call" style="width:100%;margin-top:8px;padding:10px;border-radius:10px" onclick="reorder(\''+o.id+'\')">Phir se order karein</button></div>';
+   }).join('')+'</div>';}
+  $('#sheet').setAttribute('data-view','orders');
+  $('#sheet').innerHTML='<div class="sh"><b>\uD83D\uDCE6 Mere orders</b><button class="x" onclick="closeOv()">\u2715</button></div>'+body;
+  openOv();
+}
+function reorder(id){var o=loadOrders().filter(function(x){return x.id===id})[0];if(!o)return;o.items.forEach(function(it){var p=(DATA.products||[]).filter(function(x){return x.name===it.name})[0];if(p)CART[p.id]=(CART[p.id]||0)+it.qty});saveCart();closeOv();openCart()}
+function showSugg(q){
+  var box=$('#sugg');if(!box)return;q=(q||'').toLowerCase().trim();
+  if(!q){box.classList.add('hidden');box.innerHTML='';return}
+  var ps=(DATA.products||[]).filter(function(p){return ((p.name||'')+' '+(p.brand||'')).toLowerCase().indexOf(q)>-1}).slice(0,6);
+  if(!ps.length){box.classList.add('hidden');box.innerHTML='';return}
+  box.innerHTML=ps.map(function(p){return '<div class="sug" onclick="pickSugg(\''+esc(p.id)+'\')">'+(p.photo?'<img src="'+esc(p.photo)+'"/>':'<span class="ph">\uD83D\uDED2</span>')+'<div><div class="sn">'+esc(p.name)+'</div><div class="sp">'+money(p.price)+' \u00B7 '+esc(p.unit||'')+'</div></div></div>'}).join('');
+  box.classList.remove('hidden');
+}
+function pickSugg(id){$('#sugg').classList.add('hidden');var p=prodById(id);if(p){$('#q').value=p.name;view.q=p.name;if(tab!=='home'){tab='home';render()}else fillGrid()}}
 
 /* ----- overlays ----- */
 function openOv(){$('#ov').classList.remove('hidden')}
@@ -454,13 +559,15 @@ function updateCartUI(){
   var navBadge=document.querySelector('#bnav .badge');if(navBadge){if(n<=0)navBadge.remove();else navBadge.textContent=n}
 }
 
-$('#q').addEventListener('input',function(e){view.q=e.target.value;if(tab!=='home'){tab='home';render()}else fillGrid()});
+$('#q').addEventListener('input',function(e){view.q=e.target.value;showSugg(e.target.value);if(tab!=='home'){tab='home';render()}else fillGrid()});
+$('#q').addEventListener('blur',function(){setTimeout(function(){var b=$('#sugg');if(b)b.classList.add('hidden')},220)});
 $('#refresh').addEventListener('click',loadData);
 $('#cartTop').addEventListener('click',openCart);
 
 loadData();
 timer=setInterval(loadData,180000);
 document.addEventListener('visibilitychange',function(){if(!document.hidden)loadData()});
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
 </script>
 </body>
 </html>
