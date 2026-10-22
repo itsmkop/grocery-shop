@@ -1,126 +1,176 @@
 <!doctype html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#0b7a3b"/>
-<title>Admin Panel - Apni Dukaan</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b7a3b'/%3E%3Cpath d='M32 16l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z' fill='%23fff'/%3E%3C/svg%3E"/>
+<meta name="theme-color" content="#F2F2F7"/>
+<title>Admin - Apni Dukaan</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23007AFF'/%3E%3Cpath d='M32 16l3.2 6.4 7 1-5 4.9 1.2 7-6.4-3.3-6.4 3.3 1.2-7-5-4.9 7-1z' fill='%23fff'/%3E%3C/svg%3E"/>
 <style>
-:root{--g:#0b7a3b;--g2:#0a6a33;--bg:#f2f5f2;--card:#fff;--tx:#16241b;--mut:#6b7a70;--line:#e2e8e2;--red:#c62828;--amber:#b26a00;--blue:#1565c0}
+:root{--bg:#F2F2F7;--card:#fff;--tx:#000;--tx2:#3C3C43;--mut:#8E8E93;--sep:rgba(60,60,67,.16);--accent:#007AFF;--accent2:#0A84FF;--soft:rgba(0,122,255,.12);--green:#34C759;--red:#FF3B30;--amber:#FF9F0A;--fill:rgba(118,118,128,.12);--sh:0 1px 2px rgba(0,0,0,.05),0 10px 30px rgba(0,0,0,.06);--sh2:0 20px 50px rgba(0,0,0,.22);--ease:cubic-bezier(.32,.72,0,1)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;background:var(--bg);color:var(--tx)}
-button{font:inherit;cursor:pointer}
-input,select,textarea{font:inherit;width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--tx);outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--g)}
-label.f{display:block;font-size:12.5px;color:var(--mut);margin:0 0 4px}
-.field{margin-bottom:12px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit;transition:transform .18s var(--ease),opacity .18s var(--ease)}
+button:active{transform:scale(.96)}
+input,select,textarea{font:inherit;width:100%;border:0;background:var(--fill);border-radius:13px;padding:13px 14px;font-size:16px;color:var(--tx);outline:none;transition:box-shadow .18s,background .18s}
+input:focus,select:focus,textarea:focus{background:#fff;box-shadow:0 0 0 3px rgba(0,122,255,.25)}
 .hidden{display:none!important}
-.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--g),var(--g2));padding:24px}
-.gate .box{background:#fff;border-radius:18px;padding:26px 22px;width:100%;max-width:360px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.2)}
-.gate .box .ic{font-size:44px}
-.gate h2{margin:8px 0 2px;font-size:20px}
-.gate p{margin:0 0 18px;color:var(--mut);font-size:13.5px}
-header.bar{background:linear-gradient(160deg,var(--g),var(--g2));color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:20;box-shadow:0 2px 10px rgba(0,0,0,.12)}
-header.bar .t{font-weight:700;font-size:16px;line-height:1.1}
-header.bar .s{font-size:11.5px;opacity:.9}
-header.bar .sp{margin-left:auto;display:flex;gap:8px}
-header.bar button{background:rgba(255,255,255,.16);color:#fff;border:0;border-radius:9px;padding:8px 11px;font-size:13px}
-nav.tabs{display:flex;gap:4px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:56px;z-index:19;overflow-x:auto;padding:6px 8px}
-nav.tabs button{flex:1;white-space:nowrap;border:0;background:transparent;color:var(--mut);padding:9px 10px;border-radius:9px;font-size:13.5px;font-weight:600}
-nav.tabs button.on{background:#e7f3ec;color:var(--g)}
-main{padding:14px;max-width:920px;margin:0 auto}
-h3.sec{margin:4px 0 12px;font-size:16px}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+label.f{display:block;font-size:12.5px;color:var(--mut);margin:0 2px 7px;font-weight:500;text-transform:uppercase;letter-spacing:.4px}
+.field{margin-bottom:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px}
+@media(max-width:520px){.row3{grid-template-columns:1fr 1fr}}
+/* gate */
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0A84FF,#0060DF);padding:24px}
+.gate .box{background:#fff;border-radius:24px;padding:30px 24px;width:100%;max-width:360px;text-align:center;box-shadow:var(--sh2);animation:pop .35s var(--ease)}
+.gate .ic{font-size:44px}
+.gate h2{margin:8px 0 3px;font-size:22px;letter-spacing:-.5px}
+.gate p{margin:0 0 20px;color:var(--mut);font-size:14px}
+/* header */
+header.bar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.8);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);border-bottom:.5px solid var(--sep);padding:12px 16px;display:flex;align-items:center;gap:10px}
+header.bar .t{font-size:18px;font-weight:700;letter-spacing:-.4px;line-height:1.15}
+header.bar .s{font-size:12px;color:var(--mut);display:flex;align-items:center;gap:5px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.dot.off{background:var(--amber)}
+header.bar .sp{margin-left:auto;display:flex;gap:8px;align-items:center}
+.lang{font-size:13px;font-weight:700;color:var(--accent);background:var(--soft);border-radius:999px;padding:7px 12px}
+.icobtn{width:40px;height:40px;border-radius:999px;background:var(--fill);display:flex;align-items:center;justify-content:center;color:var(--tx)}
+.icobtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+/* tabs */
+nav.tabs{position:sticky;top:64px;z-index:39;background:rgba(242,242,247,.92);backdrop-filter:blur(20px);padding:9px 12px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;border-bottom:.5px solid var(--sep)}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{white-space:nowrap;background:#fff;color:var(--tx2);border-radius:999px;padding:9px 15px;font-size:14px;font-weight:600;box-shadow:var(--sh);transition:background .2s var(--ease),color .2s}
+nav.tabs button.on{background:var(--accent);color:#fff}
+main{padding:14px;max-width:940px;margin:0 auto}
+h3.sec{margin:6px 4px 12px;font-size:16px;font-weight:700;letter-spacing:-.3px}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 @media(min-width:620px){.stats{grid-template-columns:repeat(4,1fr)}}
-.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px}
-.stat .n{font-size:23px;font-weight:800}
-.stat .l{font-size:12px;color:var(--mut);margin-top:2px}
-.stat.warn .n{color:var(--amber)}.stat.bad .n{color:var(--red)}.stat.good .n{color:var(--g)}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
-.btn{background:var(--g);color:#fff;border:0;border-radius:10px;padding:11px 15px;font-weight:700;font-size:14px}
-.btn.gray{background:#eef2ee;color:var(--tx)}
-.btn.red{background:#fbe9e9;color:var(--red)}
-.btn.sm{padding:8px 12px;font-size:13px;border-radius:9px}
+.stat{background:#fff;border-radius:18px;padding:16px;box-shadow:var(--sh);animation:pop .3s var(--ease) both}
+.stat .n{font-size:24px;font-weight:700;letter-spacing:-.6px}
+.stat .l{font-size:12.5px;color:var(--mut);margin-top:3px}
+.stat.warn .n{color:var(--amber)}.stat.bad .n{color:var(--red)}.stat.good .n{color:var(--green)}
+.card{background:#fff;border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:var(--sh);animation:slideUp .34s var(--ease) both}
+.btn{background:var(--accent);color:#fff;border-radius:13px;padding:13px 18px;font-weight:700;font-size:15px}
+.btn.gray{background:var(--fill);color:var(--tx)}
+.btn.red{background:rgba(255,59,48,.12);color:var(--red)}
+.btn.green{background:var(--green);color:#fff}
+.btn.sm{padding:9px 13px;font-size:13.5px;border-radius:11px}
 .btn.full{width:100%}
-.list .it{display:flex;gap:11px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:13px;padding:9px;margin-bottom:9px}
-.list .it img,.list .it .ph{width:56px;height:56px;border-radius:10px;object-fit:cover;background:#eef2ee;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:24px;color:#b9c6bd}
+.list .it{display:flex;gap:12px;align-items:center;background:#fff;border-radius:16px;padding:10px;margin-bottom:10px;box-shadow:var(--sh);animation:pop .3s var(--ease) both}
+.list .it img,.list .it .ph{width:58px;height:58px;border-radius:13px;object-fit:cover;background:var(--fill);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--mut)}
 .list .it .info{flex:1;min-width:0}
-.list .it .nm{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.list .it .sub{font-size:12px;color:var(--mut);margin-top:2px}
-.list .it .pr{font-weight:800;color:var(--g)}
-.pill{font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 6px;margin-left:6px}
-.pill.out{background:#fdeaea;color:var(--red)}.pill.low{background:#fff4e0;color:var(--amber)}.pill.in{background:#e7f6ec;color:#0a7d3b}
-.ico{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
-.toolrow{display:flex;gap:9px;align-items:center;margin-bottom:12px}
+.list .it .nm{font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.2px}
+.list .it .sub{font-size:12.5px;color:var(--mut);margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.list .it .pr{font-weight:700;color:var(--tx)}
+.pill{font-size:10.5px;font-weight:700;border-radius:999px;padding:3px 9px}
+.pill.out{background:rgba(255,59,48,.14);color:var(--red)}.pill.low{background:rgba(255,159,10,.16);color:var(--amber)}.pill.in{background:rgba(52,199,89,.16);color:var(--green)}
+.ico{width:36px;height:36px;border-radius:999px;border:0;background:var(--fill);display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto;color:var(--tx)}
+.toolrow{display:flex;gap:10px;align-items:center;margin-bottom:14px}
 .toolrow input{flex:1}
-.overlay{position:fixed;inset:0;background:rgba(10,20,14,.5);z-index:40;display:flex;justify-content:center;overflow:auto;padding:0}
-@media(min-width:620px){.overlay{align-items:flex-start;padding:24px}}
-.panel{background:#fff;width:100%;max-width:640px;min-height:100%;border-radius:0}
-@media(min-width:620px){.panel{border-radius:16px;min-height:0}}
-.panel .ph{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:13px 16px;display:flex;align-items:center;gap:10px;z-index:5}
-.panel .ph b{font-size:16px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:50;display:flex;justify-content:center;overflow:auto;animation:fade .25s ease}
+@media(min-width:620px){.overlay{align-items:flex-start;padding:26px}}
+.panel{background:#fff;width:100%;max-width:640px;min-height:100%;animation:sheetUp .4s var(--ease)}
+@media(min-width:620px){.panel{border-radius:22px;min-height:0;animation:pop .3s var(--ease)}}
+.panel .ph{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:.5px solid var(--sep);padding:15px 16px;display:flex;align-items:center;gap:10px;z-index:5}
+.panel .ph b{font-size:17px;font-weight:700;letter-spacing:-.3px}
 .panel .pb{padding:16px}
-.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px}
-.chips .c{background:#eef2ee;border-radius:999px;padding:6px 11px;font-size:13px;display:flex;align-items:center;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chips .c{background:var(--fill);border-radius:999px;padding:8px 13px;font-size:14px;display:flex;align-items:center;gap:8px}
 .chips .c b{cursor:pointer;color:var(--red)}
-.photoBox{display:flex;gap:12px;align-items:center}
-.photoBox .prev{width:88px;height:88px;border-radius:12px;background:#eef2ee;object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:30px;color:#b9c6bd;flex:0 0 auto}
-.note{font-size:12px;color:var(--mut);line-height:1.55}
-.banner{font-size:12.5px;padding:10px 12px;border-radius:10px;margin-bottom:12px;line-height:1.5}
-.banner.ok{background:#e7f6ec;color:#0a6a33}.banner.bad{background:#fdeaea;color:var(--red)}.banner.warn{background:#fff4e0;color:var(--amber)}
-.switch{display:flex;align-items:center;gap:8px;font-size:14px;margin:8px 0}
+.photoBox{display:flex;gap:13px;align-items:center}
+.photoBox .prev{width:92px;height:92px;border-radius:16px;background:var(--fill);object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--mut);flex:0 0 auto;overflow:hidden}
+.note{font-size:12.5px;color:var(--mut);line-height:1.55}
+.banner{font-size:13px;padding:12px 14px;border-radius:14px;margin-bottom:12px;line-height:1.5}
+.banner.ok{background:rgba(52,199,89,.14);color:#1c7a3a}.banner.bad{background:rgba(255,59,48,.12);color:var(--red)}.banner.warn{background:rgba(255,159,10,.15);color:#9a6400}
+.switch{display:flex;align-items:center;gap:10px;font-size:15px;margin:11px 0}
 .switch input{width:auto}
-hr{border:0;border-top:1px solid var(--line);margin:16px 0}
-a{color:var(--g)}
-.syncbar{font-size:12.5px;color:var(--mut)}
+.seg{display:flex;gap:2px;background:var(--fill);border-radius:12px;padding:3px}
+.seg button{flex:1;border-radius:9px;padding:10px;font-size:14px;font-weight:600;color:var(--tx2)}
+.seg button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.12);color:var(--tx)}
+hr{border:0;border-top:.5px solid var(--sep);margin:16px 0}
+a{color:var(--accent)}
+.syncbar{font-size:13px;color:var(--mut)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<!-- ===== PIN GATE ===== -->
 <div class="gate" id="gate">
   <div class="box">
     <div class="ic">&#128274;</div>
-    <h2>Admin Panel</h2>
-    <p>Apni Dukaan &mdash; dukaan malik ke liye</p>
-    <div class="field"><input id="pinIn" type="password" inputmode="numeric" placeholder="PIN daaliye" style="text-align:center;font-size:20px;letter-spacing:4px"/></div>
-    <button class="btn full" id="pinGo">Khuliye</button>
-    <p style="margin-top:14px">Pehli baar? Default PIN: <b>1234</b></p>
+    <h2 id="gateTitle">Admin Panel</h2>
+    <p id="gateSub">Shop owner area</p>
+    <div class="field"><input id="pinIn" type="password" inputmode="numeric" style="text-align:center;font-size:22px;letter-spacing:6px"/></div>
+    <button class="btn full" id="pinGo">Unlock</button>
+    <p id="gateHint" style="margin-top:16px">First time? Default PIN: <b>1234</b></p>
   </div>
 </div>
 
-<!-- ===== APP ===== -->
 <div id="app" class="hidden">
   <header class="bar">
-    <div><div class="t" id="hName">Apni Dukaan</div><div class="s" id="hSync">Admin Panel</div></div>
+    <div style="min-width:0">
+      <div class="t" id="hName">Apni Dukaan</div>
+      <div class="s"><span class="dot" id="hDot"></span><span id="hSync">Admin</span></div>
+    </div>
     <div class="sp">
-      <button id="btnSave" title="Save">&#128190; Save</button>
-      <button id="btnLock" title="Lock">&#128274;</button>
+      <button class="lang" id="langBtn">EN</button>
+      <button class="btn sm" id="btnSave">Save</button>
+      <button class="icobtn" id="btnLock" aria-label="Lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></button>
     </div>
   </header>
   <nav class="tabs" id="tabs"></nav>
   <main id="view"></main>
 </div>
 
-<!-- ===== PRODUCT FORM OVERLAY ===== -->
 <div class="overlay hidden" id="formWrap">
   <div class="panel">
-    <div class="ph"><b id="formTitle">Naya item</b><span style="margin-left:auto"><button class="ico" onclick="closeForm()">&#10005;</button></span></div>
+    <div class="ph"><b id="formTitle">New item</b><span style="margin-left:auto"><button class="icobtn" onclick="closeForm()">&#10005;</button></span></div>
     <div class="pb" id="formBody"></div>
   </div>
 </div>
 
 <script>
 var API='https://api.github.com';
-var OWNER='itsmkop', REPO='grocery-shop', BRANCH='main', PATH='data.json';
+var OWNER='itsmkop',REPO='grocery-shop',BRANCH='main',PATH='data.json';
 var PUBLIC_URL='https://itsmkop.github.io/grocery-shop/';
 var ADMIN_URL='https://itsmkop.github.io/grocery-shop/admin.html';
-var CFG_KEY='gs_cfg', DATA_KEY='gs_data', PIN_KEY='gs_pin';
+var CFG_KEY='gs_cfg',DATA_KEY='gs_data',PIN_KEY='gs_pin';
 var CFG={owner:OWNER,repo:REPO,branch:BRANCH,path:PATH,token:'',autoPush:true,lastSync:''};
-var DATA=null, tab='dash', editId=null, pushTimer=null;
+var DATA=null,tab='dash',editId=null,pushTimer=null,syncMsg='',pushing=false,pushQueued=false;
+var LANG=localStorage.getItem('gs_lang')||'en';
+
+var I18N={
+en:{title:"Admin Panel",subtitle:"Shop owner area",enterPin:"Enter PIN",unlock:"Unlock",firstTime:"First time? Default PIN: 1234",wrongPin:"Wrong PIN",save:"Save",lock:"Lock",onlineOk:"Online connected",tokenNeeded:"Token needed (Cloud tab)",
+tabDash:"Dashboard",tabItems:"Items",tabOrders:"Orders",tabCats:"Categories",tabShop:"Shop",tabCloud:"Cloud",
+totalItems:"Total items",stockValue:"Stock value",lowStock:"Low stock",outOfStock:"Out of stock",expSoon:"{n} item(s) expiring soon.",expSoonTitle:"Expiring soon",lowTitle:"Low / out of stock",noneNow:"None right now.",allGood:"All good.",addNew:"Add new item",
+searchItems:"Search by name / brand / barcode",itemsCount:"{n} item(s)",noItems:"No items yet. Tap + to add.",newItem:"New item",editItem:"Edit item",
+name:"Name",category:"Category",brand:"Brand",photo:"Photo",orLink:"or paste a photo link",price:"Price",mrp:"MRP",packUnit:"Pack / Unit",stock:"Stock",expiryDate:"Expiry date",gstPct:"GST %",barcode:"Barcode",hsn:"HSN code",batch:"Batch no.",cost:"Purchase rate",supplier:"Supplier",tags:"Tags (comma separated)",detailsNote:"Details / note",available:"In stock (available)",featured:"Top / featured (highlight in app)",del:"Delete",
+manageCats:"Manage categories",add:"Add",newCatPh:"New category",catNote:"Removing a category won't delete its items.",
+shopDetails:"Shop details",shopName:"Shop name",tagline:"Tagline",logo:"Logo",phone:"Phone",whatsapp:"WhatsApp",address:"Address",hours:"Opening hours",upi:"UPI ID (payment)",gstin:"GSTIN",lowAlert:"Low stock alert",expAlert:"Expiry alert (days)",currency:"Currency symbol",offerBanner:"Offer banner (shows on top of the app)",deliveryNote:"Delivery note",deliveryCharge:"Delivery charge (0 = free)",orderWebhook:"Order webhook URL (optional)",ordersUrl:"Orders list URL (optional)",saved:"Saved",adminPin:"Admin PIN",newPin:"New PIN",change:"Change",currentPin:"Current PIN:",pinChanged:"PIN changed",pinShort:"At least 4 digits",backup:"Backup",jsonBackup:"JSON backup",csv:"CSV",importJson:"Import JSON",badFile:"Invalid file",
+totalOrders:"Total orders",addOrder:"Add order",loadOnline:"Load from online",ordersNote:"Customers send orders on WhatsApp; you can also log and track them here.",noOrders:"No orders yet.",
+cloudConnected:"Cloud connected. Data saves online automatically.",connectOnce:"Add your GitHub token once, then everything runs automatically.",cloudSettings:"Cloud settings",tokenLabel:"GitHub Token (once)",autoSync:"Auto-send on every save (auto-sync)",saveToken:"Save token",push:"Push",pull:"Pull",publicLink:"Public app link (share with customers)",copyLink:"Copy link",open:"Open",createToken:"Create token",howToken:"How to create the token (one time)",tokenSaved:"Token saved",tokenEmpty:"Token is empty",pushing:"Sending online...",onlineSaved:"Online saved",pullLoading:"Loading from online...",loadedOnline:"Loaded from online",needToken:"Please add your GitHub token in the Cloud tab first.",localSaved:"Saved on device. To send online, add the token in the Cloud tab.",copied:"Copied",copyNow:"Copy",
+steps:"1. Tap 'Create token' (opens GitHub). 2. Scroll down and tap Generate token. 3. Copy the ghp_... value. 4. Paste it here and tap Save token.",tokenSafe:"The token stays only on this device.",
+cName:"Customer name:",cPhone:"Mobile number:",cAddr:"Address (optional):",cItems:"Items (e.g. Atta 5kg x1, Oil 1L x2):",cTotal:"Total (\u20B9):",stNew:"New",stPack:"Packing",stShip:"Shipped",stDone:"Done",stCancel:"Cancel",confirmDel:"Delete this order?"},
+hi:{title:"एडमिन पैनल",subtitle:"दुकान मालिक के लिए",enterPin:"PIN डालें",unlock:"खोलें",firstTime:"पहली बार? डिफ़ॉल्ट PIN: 1234",wrongPin:"ग़लत PIN",save:"सेव",lock:"लॉक",onlineOk:"ऑनलाइन जुड़ा हुआ",tokenNeeded:"टोकन चाहिए (Cloud टैब)",
+tabDash:"डैशबोर्ड",tabItems:"आइटम",tabOrders:"ऑर्डर",tabCats:"श्रेणियाँ",tabShop:"दुकान",tabCloud:"क्लाउड",
+totalItems:"कुल आइटम",stockValue:"स्टॉक की कीमत",lowStock:"कम स्टॉक",outOfStock:"स्टॉक ख़त्म",expSoon:"{n} आइटम जल्द एक्सपायर होंगे।",expSoonTitle:"जल्द एक्सपायर",lowTitle:"कम / ख़त्म स्टॉक",noneNow:"अभी कोई नहीं।",allGood:"सब ठीक है।",addNew:"नया आइटम जोड़ें",
+searchItems:"नाम / ब्रांड / बारकोड से खोजें",itemsCount:"{n} आइटम",noItems:"अभी कोई आइटम नहीं। + दबाएँ।",newItem:"नया आइटम",editItem:"आइटम बदलें",
+name:"नाम",category:"श्रेणी",brand:"ब्रांड",photo:"फ़ोटो",orLink:"या फ़ोटो लिंक डालें",price:"कीमत",mrp:"MRP",packUnit:"पैक / यूनिट",stock:"स्टॉक",expiryDate:"एक्सपायरी तिथि",gstPct:"GST %",barcode:"बारकोड",hsn:"HSN कोड",batch:"बैच नंबर",cost:"ख़रीद दाम",supplier:"सप्लायर",tags:"टैग (कॉमा से)",detailsNote:"विवरण / नोट",available:"स्टॉक में है",featured:"टॉप / फ़ीचर्ड (ऐप में हाइलाइट)",del:"डिलीट",
+manageCats:"श्रेणियाँ प्रबंधित करें",add:"जोड़ें",newCatPh:"नई श्रेणी",catNote:"श्रेणी हटाने से आइटम डिलीट नहीं होंगे।",
+shopDetails:"दुकान की जानकारी",shopName:"दुकान का नाम",tagline:"टैगलाइन",logo:"लोगो",phone:"फ़ोन",whatsapp:"WhatsApp",address:"पता",hours:"खुलने का समय",upi:"UPI ID (भुगतान)",gstin:"GSTIN",lowAlert:"कम स्टॉक अलर्ट",expAlert:"एक्सपायरी अलर्ट (दिन)",currency:"मुद्रा चिह्न",offerBanner:"ऑफ़र बैनर (ऐप के ऊपर दिखेगा)",deliveryNote:"डिलीवरी नोट",deliveryCharge:"डिलीवरी शुल्क (0 = मुफ़्त)",orderWebhook:"ऑर्डर वेबहुक URL (वैकल्पिक)",ordersUrl:"ऑर्डर सूची URL (वैकल्पिक)",saved:"सेव हो गया",adminPin:"एडमिन PIN",newPin:"नया PIN",change:"बदलें",currentPin:"अभी का PIN:",pinChanged:"PIN बदल गया",pinShort:"कम से कम 4 अंक",backup:"बैकअप",jsonBackup:"JSON बैकअप",csv:"CSV",importJson:"JSON इम्पोर्ट",badFile:"फ़ाइल ग़लत है",
+totalOrders:"कुल ऑर्डर",addOrder:"ऑर्डर जोड़ें",loadOnline:"ऑनलाइन से लाएँ",ordersNote:"ग्राहक WhatsApp पर ऑर्डर भेजते हैं; यहाँ रिकॉर्ड भी रख सकते हैं।",noOrders:"अभी कोई ऑर्डर नहीं।",
+cloudConnected:"क्लाउड जुड़ा हुआ है। डेटा अपने-आप ऑनलाइन सेव होता है।",connectOnce:"एक बार GitHub टोकन डालें, फिर सब अपने-आप चलेगा।",cloudSettings:"क्लाउड सेटिंग",tokenLabel:"GitHub टोकन (एक बार)",autoSync:"हर सेव पर अपने-आप भेजें (ऑटो-सिंक)",saveToken:"टोकन सेव करें",push:"भेजें",pull:"लाएँ",publicLink:"पब्लिक ऐप लिंक (ग्राहकों को भेजें)",copyLink:"लिंक कॉपी करें",open:"खोलें",createToken:"टोकन बनाएँ",howToken:"टोकन कैसे बनाएँ (एक बार)",tokenSaved:"टोकन सेव हो गया",tokenEmpty:"टोकन ख़ाली है",pushing:"ऑनलाइन भेजा जा रहा है...",onlineSaved:"ऑनलाइन सेव हो गया",pullLoading:"ऑनलाइन से लाया जा रहा है...",loadedOnline:"ऑनलाइन से आ गया",needToken:"पहले Cloud टैब में GitHub टोकन डालें।",localSaved:"डिवाइस पर सेव हो गया। ऑनलाइन भेजने के लिए Cloud टैब में टोकन डालें।",copied:"कॉपी हो गया",copyNow:"कॉपी करें",
+steps:"1. 'टोकन बनाएँ' दबाएँ (GitHub खुलेगा)। 2. नीचे जाकर Generate token दबाएँ। 3. ghp_... कॉपी करें। 4. यहाँ पेस्ट करके टोकन सेव करें।",tokenSafe:"टोकन सिर्फ़ इसी डिवाइस पर रहता है।",
+cName:"ग्राहक का नाम:",cPhone:"मोबाइल नंबर:",cAddr:"पता (वैकल्पिक):",cItems:"आइटम (जैसे: अटा 5kg x1, तेल 1L x2):",cTotal:"कुल (\u20B9):",stNew:"नया",stPack:"पैकिंग",stShip:"भेज दिया",stDone:"पूरा",stCancel:"कैंसल",confirmDel:"यह ऑर्डर डिलीट करें?"}
+};
+function t(k){var d=I18N[LANG]||I18N.en;return (d[k]!=null?d[k]:(I18N.en[k]!=null?I18N.en[k]:k))}
+function setLang(l){LANG=l;localStorage.setItem('gs_lang',l);document.documentElement.lang=(l==='hi'?'hi':'en');boot2()}
 
 function $(s){return document.querySelector(s)}
 function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -128,132 +178,110 @@ function money(n){if(n===''||n==null)return '';return (DATA.shop.currency||'\u20
 function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function b64(s){return btoa(unescape(encodeURIComponent(s)))}
 function daysLeft(d){if(!d)return null;var t=new Date();t.setHours(0,0,0,0);var e=new Date(d);if(isNaN(e))return null;e.setHours(0,0,0,0);return Math.round((e-t)/86400000)}
-function fmtDate(d){if(!d)return '';var e=new Date(d);if(isNaN(e))return d;return e.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}
-function timeNow(){return new Date().toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}
+function fmtDate(d){if(!d)return '';var e=new Date(d);if(isNaN(e))return d;return e.toLocaleDateString(LANG==='hi'?'hi-IN':'en-IN',{day:'2-digit',month:'short',year:'numeric'})}
+function timeNow(){return new Date().toLocaleString(LANG==='hi'?'hi-IN':'en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}
+function fmtSync(){if(!CFG.lastSync)return '';try{return new Date(CFG.lastSync).toLocaleString(LANG==='hi'?'hi-IN':'en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
+function DEFAULT(){return {meta:{version:1,updatedAt:new Date().toISOString()},shop:{name:'Apni Dukaan',owner:'',phone:'',whatsapp:'',address:'',tagline:'',upi:'',gstin:'',hours:'',logo:'',currency:'\u20B9',lowStock:5,expiryDays:30,offerBanner:'',deliveryNote:'',deliveryCharge:0,orderWebhook:'',ordersUrl:'',categories:['Atta & Rice','Dal & Pulses','Oil & Ghee','Masala & Spices','Snacks','Dairy','Beverages','Personal Care','Household','Other']},products:[]}}
 
-function DEFAULT(){
-  return {meta:{version:1,updatedAt:new Date().toISOString()},
-    shop:{name:'Apni Dukaan',owner:'',phone:'',whatsapp:'',address:'',tagline:'Aapki apni grocery shop',upi:'',gstin:'',hours:'8:00 AM - 9:00 PM',logo:'',currency:'\u20B9',lowStock:5,expiryDays:30,offerBanner:'',deliveryNote:'',deliveryCharge:0,orderWebhook:'',ordersUrl:'',
-      categories:['Atta & Rice','Dal & Pulses','Oil & Ghee','Masala & Spices','Snacks','Dairy','Beverages','Personal Care','Household','Other']},
-    products:[]};
-}
-
-/* ---------- storage ---------- */
 function loadCfg(){try{var c=JSON.parse(localStorage.getItem(CFG_KEY));if(c)CFG=Object.assign(CFG,c)}catch(e){}}
 function saveCfg(){try{localStorage.setItem(CFG_KEY,JSON.stringify(CFG))}catch(e){}}
 function loadData(){try{var d=JSON.parse(localStorage.getItem(DATA_KEY));if(d&&d.products)DATA=d;else DATA=DEFAULT()}catch(e){DATA=DEFAULT()}}
-function saveData(){DATA.meta=DATA.meta||{};DATA.meta.updatedAt=new Date().toISOString();try{localStorage.setItem(DATA_KEY,JSON.stringify(DATA))}catch(e){alert('Data bahut bada ho gaya (photos kam kijiye).')};schedulePush()}
+function saveData(){DATA.meta=DATA.meta||{};DATA.meta.updatedAt=new Date().toISOString();try{localStorage.setItem(DATA_KEY,JSON.stringify(DATA))}catch(e){alert(t('badFile'))};schedulePush()}
 
-/* ---------- login ---------- */
 function getPin(){return localStorage.getItem(PIN_KEY)||'1234'}
-function unlock(){sessionStorage.setItem('gs_open','1');$('#gate').classList.add('hidden');$('#app').classList.remove('hidden');boot()}
-$('#pinGo').onclick=function(){if($('#pinIn').value.trim()===getPin())unlock();else{alert('Galat PIN')}};
+function unlock(){sessionStorage.setItem('gs_open','1');$('#gate').classList.add('hidden');$('#app').classList.remove('hidden');boot2()}
+$('#pinGo').onclick=function(){if($('#pinIn').value.trim()===getPin())unlock();else{alert(t('wrongPin'))}};
 $('#pinIn').addEventListener('keydown',function(e){if(e.key==='Enter')$('#pinGo').click()});
 $('#btnLock').onclick=function(){sessionStorage.removeItem('gs_open');location.reload()};
-$('#btnSave').onclick=function(){saveData();if(CFG.token){cloudPush(false)}else{syncMsg='\u2705 Local save ho gaya. Ab ise online bhejne ke liye Cloud tab me token daaliye.';tab='cloud';renderTabs();render()}};
+$('#btnSave').onclick=function(){saveData();if(CFG.token){cloudPush(false)}else{syncMsg=t('localSaved');tab='cloud';renderTabs();render()}};
+$('#langBtn').onclick=function(){setLang(LANG==='hi'?'en':'hi')};
 
-/* ---------- tabs ---------- */
-var TABS=[['dash','\uD83D\uDCCA Dashboard'],['prod','\uD83D\uDCE6 Items'],['ord','\uD83E\uDDFE Orders'],['cats','\uD83C\uDFF7\uFE0F Category'],['set','\u2699\uFE0F Dukaan'],['cloud','\u2601\uFE0F Cloud']];
-function renderTabs(){$('#tabs').innerHTML=TABS.map(function(t){return '<button class="'+(tab===t[0]?'on':'')+'" data-t="'+t[0]+'">'+t[1]+'</button>'}).join('');
+var TABS=[['dash','tabDash'],['prod','tabItems'],['ord','tabOrders'],['cats','tabCats'],['set','tabShop'],['cloud','tabCloud']];
+function renderTabs(){$('#tabs').innerHTML=TABS.map(function(x){return '<button class="'+(tab===x[0]?'on':'')+'" data-t="'+x[0]+'">'+t(x[1])+'</button>'}).join('');
   [].forEach.call($('#tabs').children,function(b){b.onclick=function(){tab=b.getAttribute('data-t');renderTabs();render()}});}
 function render(){$('#hName').textContent=DATA.shop.name||'Apni Dukaan';
-  $('#hSync').textContent=CFG.token?'\u2705 Online juda hua':'\u26A0\uFE0F Token chahiye (Cloud tab)';
+  $('#hSync').textContent=CFG.token?t('onlineOk'):t('tokenNeeded');
+  $('#hDot').className='dot'+(CFG.token?'':' off');
+  $('#btnSave').textContent=t('save');
+  $('#langBtn').textContent=(LANG==='hi'?'\u0939\u093F':'EN');
   if(tab==='dash')renderDash();else if(tab==='prod')renderProd();else if(tab==='ord')renderOrders();else if(tab==='cats')renderCats();else if(tab==='set')renderSet();else renderCloud();}
 
-/* ---------- dashboard ---------- */
-function stockInfo(p){var low=DATA.shop.lowStock||5;if(p.available===false||p.stock===0||p.stock==='0')return{k:'out',t:'Khatam'};if(p.stock!==''&&p.stock!=null&&Number(p.stock)<=low)return{k:'low',t:'Sirf '+p.stock};return{k:'in',t:'Stock me'}}
+function stockInfo(p){var low=DATA.shop.lowStock||5;if(p.available===false||p.stock===0||p.stock==='0')return{k:'out',t:t('outOfStock')};if(p.stock!==''&&p.stock!=null&&Number(p.stock)<=low)return{k:'low',t:t('lowStock')+' '+p.stock};return{k:'in',t:t('available')}}
 function renderDash(){
   var ps=DATA.products||[];var out=0,low=0,soon=0,val=0;
   ps.forEach(function(p){var s=stockInfo(p);if(s.k==='out')out++;else if(s.k==='low')low++;var dl=daysLeft(p.expiry);if(dl!=null&&dl<=(DATA.shop.expiryDays||30))soon++;val+=(Number(p.price)||0)*(Number(p.stock)||0)});
   var expSoon=ps.filter(function(p){var dl=daysLeft(p.expiry);return dl!=null&&dl<=(DATA.shop.expiryDays||30)}).slice(0,6);
   var lowList=ps.filter(function(p){return stockInfo(p).k!=='in'}).slice(0,6);
-  $('#view').innerHTML=
-   '<div class="stats">'+
-   stat('good',ps.length,'Total items')+
-   stat('',val?'\u20B9'+Math.round(val).toLocaleString('en-IN'):'\u20B9 0','Stock ki value')+
-   stat('warn',low,'Kam stock')+
-   stat('bad',out,'Khatam')+
-   '</div>'+
-   (soon?'<div class="banner warn" style="margin-top:14px">\u23F0 '+soon+' item jaldi expire hone wale hain. Neeche dekhiye.</div>':'')+
-   '<div class="card" style="margin-top:14px"><h3 class="sec">Jaldi expire hone wale</h3>'+(expSoon.length?expSoon.map(function(p){return '<div class="list"><div class="it"><div class="info"><div class="nm">'+esc(p.name)+'</div><div class="sub">Expiry: '+fmtDate(p.expiry)+'</div></div></div></div>'}).join(''):'<div class="note">Koi nahi.</div>')+'</div>'+
-   '<div class="card"><h3 class="sec">Kam / khatam stock</h3>'+(lowList.length?lowList.map(function(p){return '<div class="list"><div class="it"><div class="info"><div class="nm">'+esc(p.name)+'</div><div class="sub">'+stockInfo(p).t+'</div></div></div></div>'}).join(''):'<div class="note">Sab theek hai.</div>')+'</div>'+
-   '<button class="btn full" onclick="openForm()">\u2795 Naya item jodein</button>';
+  $('#view').innerHTML='<div class="stats">'+
+   stat('good',ps.length,t('totalItems'))+stat('',money(Math.round(val)),t('stockValue'))+stat('warn',low,t('lowStock'))+stat('bad',out,t('outOfStock'))+'</div>'+
+   (soon?'<div class="banner warn" style="margin-top:14px">\u23F0 '+t('expSoon').replace('{n}',soon)+'</div>':'')+
+   '<div class="card" style="margin-top:14px"><h3 class="sec">'+t('expSoonTitle')+'</h3>'+(expSoon.length?expSoon.map(function(p){return '<div style="padding:8px 0;border-bottom:.5px solid var(--sep)"><b>'+esc(p.name)+'</b><div class="note">'+t('expiryDate')+': '+fmtDate(p.expiry)+'</div></div>'}).join(''):'<div class="note">'+t('noneNow')+'</div>')+'</div>'+
+   '<div class="card"><h3 class="sec">'+t('lowTitle')+'</h3>'+(lowList.length?lowList.map(function(p){return '<div style="padding:8px 0;border-bottom:.5px solid var(--sep)"><b>'+esc(p.name)+'</b><div class="note">'+stockInfo(p).t+'</div></div>'}).join(''):'<div class="note">'+t('allGood')+'</div>')+'</div>'+
+   '<button class="btn full" onclick="openForm()">+ '+t('addNew')+'</button>';
 }
 function stat(cls,n,l){return '<div class="stat '+cls+'"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'}
 
-/* ---------- products ---------- */
 var pQuery='';
 function renderProd(){
   var ps=(DATA.products||[]).slice();
   if(pQuery){var q=pQuery.toLowerCase();ps=ps.filter(function(p){return ((p.name||'')+' '+(p.brand||'')+' '+(p.barcode||'')+' '+(p.category||'')).toLowerCase().indexOf(q)>-1})}
   ps.sort(function(a,b){return (a.name||'').localeCompare(b.name||'')});
-  var list=ps.length?ps.map(itemHTML).join(''):'<div class="note" style="padding:20px;text-align:center">Koi item nahi. "Naya item jodein" dabaiye.</div>';
-  $('#view').innerHTML='<div class="toolrow"><input id="pq" placeholder="Naam / brand / barcode se dhundein" value="'+esc(pQuery)+'"/><button class="btn" onclick="openForm()">\u2795</button></div>'+
-    '<div class="note" style="margin-bottom:10px">'+ps.length+' item</div><div class="list">'+list+'</div>';
+  var list=ps.length?ps.map(itemHTML).join(''):'<div class="note" style="padding:22px;text-align:center">'+t('noItems')+'</div>';
+  $('#view').innerHTML='<div class="toolrow"><input id="pq" placeholder="'+esc(t('searchItems'))+'" value="'+esc(pQuery)+'"/><button class="btn" style="border-radius:999px;padding:13px 18px" onclick="openForm()">+</button></div>'+
+    '<div class="note" style="margin:0 4px 12px">'+t('itemsCount').replace('{n}',ps.length)+'</div><div class="list">'+list+'</div>';
   var pq=$('#pq');pq.oninput=function(){pQuery=pq.value;var pos=pq.selectionStart;renderProd();var n=$('#pq');n.focus();try{n.setSelectionRange(pos,pos)}catch(e){}};
 }
 function itemHTML(p){
   var s=stockInfo(p);var dl=daysLeft(p.expiry);
-  var exp=dl!=null?(dl<0?'<span class="pill out">Expired</span>':(dl<=(DATA.shop.expiryDays||30)?'<span class="pill low">'+dl+'d</span>':'')):'';
+  var exp=dl!=null?(dl<0?'<span class="pill out">'+t('expSoonTitle')+'</span>':(dl<=(DATA.shop.expiryDays||30)?'<span class="pill low">'+dl+'d</span>':'')):'';
   var img=p.photo?'<img src="'+esc(p.photo)+'"/>':'<div class="ph">\uD83D\uDED2</div>';
   return '<div class="it" data-id="'+esc(p.id)+'">'+img+
-   '<div class="info"><div class="nm">'+esc(p.name)+(p.brand?' <span style="font-weight:400;color:#6b7a70">'+esc(p.brand)+'</span>':'')+'</div>'+
-   '<div class="sub"><span class="pr">'+money(p.price)+'</span> '+esc(p.unit||'')+' <span class="pill '+s.k+'">'+s.t+'</span>'+exp+'</div></div>'+
-   '<button class="ico" data-act="minus">\u2212</button><button class="ico" data-act="plus">+</button>'+
+   '<div class="info"><div class="nm">'+esc(p.name)+'</div><div class="sub"><span class="pr">'+money(p.price)+'</span>'+esc(p.unit||'')+'<span class="pill '+s.k+'">'+s.t+'</span>'+exp+'</div></div>'+
    '<button class="ico" data-act="edit">\u270E</button></div>';
 }
 document.addEventListener('click',function(e){
   var b=e.target.closest?e.target.closest('[data-act]'):null;if(!b)return;
   var it=b.closest('.it');if(!it)return;var id=it.getAttribute('data-id');
   var p=(DATA.products||[]).filter(function(x){return x.id===id})[0];if(!p)return;
-  var act=b.getAttribute('data-act');
-  if(act==='edit')openForm(id);
-  else if(act==='plus'){p.stock=(Number(p.stock)||0)+1;saveData();renderProd()}
-  else if(act==='minus'){p.stock=Math.max(0,(Number(p.stock)||0)-1);saveData();renderProd()}
+  if(b.getAttribute('data-act')==='edit')openForm(id);
 });
 
-/* ---------- product form ---------- */
 function catOptions(sel){return (DATA.shop.categories||[]).map(function(c){return '<option'+(c===sel?' selected':'')+'>'+esc(c)+'</option>'}).join('')}
 function openForm(id){
   editId=id||null;
   var p=id?(DATA.products||[]).filter(function(x){return x.id===id})[0]:{name:'',category:(DATA.shop.categories||[])[0]||'',brand:'',unit:'',price:'',mrp:'',cost:'',gst:'',stock:'',barcode:'',hsn:'',supplier:'',expiry:'',batch:'',tags:'',desc:'',photo:'',available:true,featured:false};
-  $('#formTitle').textContent=id?'Item badlein':'Naya item';
+  $('#formTitle').textContent=id?t('editItem'):t('newItem');
   $('#formBody').innerHTML=
-   '<div class="field"><label class="f">Naam *</label><input id="f_name" value="'+esc(p.name)+'" placeholder="jaise: Aashirvaad Atta"/></div>'+
-   '<div class="row2"><div class="field"><label class="f">Category</label><select id="f_category">'+catOptions(p.category)+'</select></div>'+
-   '<div class="field"><label class="f">Brand</label><input id="f_brand" value="'+esc(p.brand)+'" placeholder="Aashirvaad"/></div></div>'+
-   '<div class="field"><label class="f">Photo</label><div class="photoBox"><div class="prev" id="f_prev">'+(p.photo?'<img src="'+esc(p.photo)+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"/>':'\uD83D\uDCF7')+'</div><div style="flex:1"><input type="file" accept="image/*" id="f_file"/><div class="note" style="margin-top:6px">Ya photo ka link:</div><input id="f_photoUrl" placeholder="https://..." value="'+(p.photo&&p.photo.slice(0,5)!=='data:'?esc(p.photo):'')+'" style="margin-top:4px"/><input type="hidden" id="f_photo" value="'+esc(p.photo)+'"/></div></div></div>'+
-   '<div class="row3"><div class="field"><label class="f">Price *</label><input id="f_price" inputmode="decimal" value="'+esc(p.price)+'"/></div>'+
-   '<div class="field"><label class="f">MRP</label><input id="f_mrp" inputmode="decimal" value="'+esc(p.mrp)+'"/></div>'+
-   '<div class="field"><label class="f">Pack/Unit</label><input id="f_unit" value="'+esc(p.unit)+'" placeholder="1 kg / 500 g"/></div></div>'+
-   '<div class="row3"><div class="field"><label class="f">Stock</label><input id="f_stock" inputmode="numeric" value="'+esc(p.stock)+'"/></div>'+
-   '<div class="field"><label class="f">Expiry date</label><input id="f_expiry" type="date" value="'+esc(p.expiry)+'"/></div>'+
-   '<div class="field"><label class="f">GST %</label><input id="f_gst" inputmode="decimal" value="'+esc(p.gst)+'"/></div></div>'+
-   '<div class="row3"><div class="field"><label class="f">Barcode</label><input id="f_barcode" value="'+esc(p.barcode)+'"/></div>'+
-   '<div class="field"><label class="f">HSN code</label><input id="f_hsn" value="'+esc(p.hsn)+'"/></div>'+
-   '<div class="field"><label class="f">Batch no.</label><input id="f_batch" value="'+esc(p.batch)+'"/></div></div>'+
-   '<div class="row2"><div class="field"><label class="f">Purchase rate</label><input id="f_cost" inputmode="decimal" value="'+esc(p.cost)+'"/></div>'+
-   '<div class="field"><label class="f">Supplier</label><input id="f_supplier" value="'+esc(p.supplier)+'"/></div></div>'+
-   '<div class="field"><label class="f">Tags (comma se)</label><input id="f_tags" value="'+esc(p.tags)+'" placeholder="atta, gehu, 5kg"/></div>'+
-   '<div class="field"><label class="f">Details / note</label><textarea id="f_desc" rows="2">'+esc(p.desc)+'</textarea></div>'+
-   '<label class="switch"><input type="checkbox" id="f_available"'+(p.available===false?'':' checked')+'/> Stock me hai (available)</label>'+
-   '<label class="switch"><input type="checkbox" id="f_featured"'+(p.featured?' checked':'')+'/> \u2B50 Top / featured (public app me highlight)</label>'+
-   '<hr/><div style="display:flex;gap:10px">'+(id?'<button class="btn red" onclick="delProduct()">\uD83D\uDDD1 Delete</button>':'')+'<button class="btn" style="flex:1" onclick="saveForm()">Save</button></div>';
+   '<div class="field"><label class="f">'+t('name')+' *</label><input id="f_name" value="'+esc(p.name)+'"/></div>'+
+   '<div class="row2"><div class="field"><label class="f">'+t('category')+'</label><select id="f_category">'+catOptions(p.category)+'</select></div>'+
+   '<div class="field"><label class="f">'+t('brand')+'</label><input id="f_brand" value="'+esc(p.brand)+'"/></div></div>'+
+   '<div class="field"><label class="f">'+t('photo')+'</label><div class="photoBox"><div class="prev" id="f_prev">'+(p.photo?'<img src="'+esc(p.photo)+'" style="width:100%;height:100%;object-fit:cover;border-radius:16px"/>':'\uD83D\uDCF7')+'</div><div style="flex:1"><input type="file" accept="image/*" id="f_file"/><div class="note" style="margin-top:7px">'+t('orLink')+'</div><input id="f_photoUrl" placeholder="https://..." value="'+(p.photo&&p.photo.slice(0,5)!=='data:'?esc(p.photo):'')+'" style="margin-top:5px"/><input type="hidden" id="f_photo" value="'+esc(p.photo)+'"/></div></div></div>'+
+   '<div class="row3"><div class="field"><label class="f">'+t('price')+' *</label><input id="f_price" inputmode="decimal" value="'+esc(p.price)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('mrp')+'</label><input id="f_mrp" inputmode="decimal" value="'+esc(p.mrp)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('packUnit')+'</label><input id="f_unit" value="'+esc(p.unit)+'"/></div></div>'+
+   '<div class="row3"><div class="field"><label class="f">'+t('stock')+'</label><input id="f_stock" inputmode="numeric" value="'+esc(p.stock)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('expiryDate')+'</label><input id="f_expiry" type="date" value="'+esc(p.expiry)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('gstPct')+'</label><input id="f_gst" inputmode="decimal" value="'+esc(p.gst)+'"/></div></div>'+
+   '<div class="row3"><div class="field"><label class="f">'+t('barcode')+'</label><input id="f_barcode" value="'+esc(p.barcode)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('hsn')+'</label><input id="f_hsn" value="'+esc(p.hsn)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('batch')+'</label><input id="f_batch" value="'+esc(p.batch)+'"/></div></div>'+
+   '<div class="row2"><div class="field"><label class="f">'+t('cost')+'</label><input id="f_cost" inputmode="decimal" value="'+esc(p.cost)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('supplier')+'</label><input id="f_supplier" value="'+esc(p.supplier)+'"/></div></div>'+
+   '<div class="field"><label class="f">'+t('tags')+'</label><input id="f_tags" value="'+esc(p.tags)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('detailsNote')+'</label><textarea id="f_desc" rows="2">'+esc(p.desc)+'</textarea></div>'+
+   '<label class="switch"><input type="checkbox" id="f_available"'+(p.available===false?'':' checked')+'/> '+t('available')+'</label>'+
+   '<label class="switch"><input type="checkbox" id="f_featured"'+(p.featured?' checked':'')+'/> '+t('featured')+'</label>'+
+   '<hr/><div style="display:flex;gap:10px">'+(id?'<button class="btn red" onclick="delProduct()">'+t('del')+'</button>':'')+'<button class="btn" style="flex:1" onclick="saveForm()">'+t('save')+'</button></div>';
   $('#f_file').onchange=onPhoto;
-  $('#f_photoUrl').oninput=function(){var u=this.value.trim();if(u){$('#f_photo').value=u;$('#f_prev').innerHTML='<img src="'+esc(u)+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"/>'}};
+  $('#f_photoUrl').oninput=function(){var u=this.value.trim();if(u){$('#f_photo').value=u;$('#f_prev').innerHTML='<img src="'+esc(u)+'" style="width:100%;height:100%;object-fit:cover;border-radius:16px"/>'}};
   $('#formWrap').classList.remove('hidden');
 }
 function closeForm(){$('#formWrap').classList.add('hidden');editId=null}
-function onPhoto(e){var f=e.target.files[0];if(!f)return;compress(f,600,0.6,function(url){$('#f_photo').value=url;$('#f_prev').innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"/>'})}
-function compress(file,maxDim,q,cb){
-  var r=new FileReader();r.onload=function(){var img=new Image();img.onload=function(){
-    var w=img.width,h=img.height;var s=Math.min(1,maxDim/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);
-    var c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
-    cb(c.toDataURL('image/jpeg',q));};img.src=r.result};r.readAsDataURL(file);
-}
+function onPhoto(e){var f=e.target.files[0];if(!f)return;compress(f,600,0.6,function(url){$('#f_photo').value=url;$('#f_prev').innerHTML='<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;border-radius:16px"/>'})}
+function compress(file,maxDim,q,cb){var r=new FileReader();r.onload=function(){var img=new Image();img.onload=function(){var w=img.width,h=img.height;var s=Math.min(1,maxDim/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);var c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);cb(c.toDataURL('image/jpeg',q))};img.src=r.result};r.readAsDataURL(file)}
 function val(id){var e=$(id);return e?e.value.trim():''}
 function saveForm(){
-  var name=val('#f_name');if(!name){alert('Naam zaroori hai');return}
+  var name=val('#f_name');if(!name){alert(t('name'));return}
   var p=editId?(DATA.products||[]).filter(function(x){return x.id===editId})[0]:{id:uid(),createdAt:new Date().toISOString()};
   p.name=name;p.category=val('#f_category');p.brand=val('#f_brand');p.photo=val('#f_photo');
   p.price=val('#f_price');p.mrp=val('#f_mrp');p.unit=val('#f_unit');p.stock=val('#f_stock');p.expiry=val('#f_expiry');p.gst=val('#f_gst');
@@ -262,135 +290,118 @@ function saveForm(){
   if(!editId)DATA.products.push(p);
   saveData();closeForm();render();
 }
-function delProduct(){if(!confirm('Ye item delete karna hai?'))return;DATA.products=(DATA.products||[]).filter(function(x){return x.id!==editId});saveData();closeForm();render()}
+function delProduct(){if(!confirm(t('del')+'?'))return;DATA.products=(DATA.products||[]).filter(function(x){return x.id!==editId});saveData();closeForm();render()}
 
-/* ---------- categories ---------- */
 function renderCats(){
-  $('#view').innerHTML='<h3 class="sec">Category manage</h3><div class="card"><div class="chips">'+(DATA.shop.categories||[]).map(function(c,i){return '<span class="c">'+esc(c)+' <b data-del="'+i+'">\u2715</b></span>'}).join('')+'</div>'+
-   '<div class="row2"><input id="newCat" placeholder="Nayi category"/><button class="btn" onclick="addCat()">Jodein</button></div></div>'+
-   '<div class="note">Category hatane se items delete nahi honge, sirf list se hadd jayegi.</div>';
+  $('#view').innerHTML='<h3 class="sec">'+t('manageCats')+'</h3><div class="card"><div class="chips">'+(DATA.shop.categories||[]).map(function(c,i){return '<span class="c">'+esc(c)+' <b data-del="'+i+'">\u2715</b></span>'}).join('')+'</div>'+
+   '<div class="row2"><input id="newCat" placeholder="'+esc(t('newCatPh'))+'"/><button class="btn" onclick="addCat()">'+t('add')+'</button></div></div>'+
+   '<div class="note" style="margin:0 4px">'+t('catNote')+'</div>';
   [].forEach.call(document.querySelectorAll('[data-del]'),function(b){b.onclick=function(){DATA.shop.categories.splice(Number(b.getAttribute('data-del')),1);saveData();renderCats()}});
 }
 function addCat(){var v=$('#newCat').value.trim();if(!v)return;DATA.shop.categories=DATA.shop.categories||[];if(DATA.shop.categories.indexOf(v)<0)DATA.shop.categories.push(v);saveData();renderCats()}
 
-/* ---------- settings ---------- */
 function renderSet(){
   var s=DATA.shop;
-  $('#view').innerHTML='<h3 class="sec">Dukaan ki jankari</h3><div class="card">'+
-   '<div class="field"><label class="f">Dukaan ka naam</label><input id="s_name" value="'+esc(s.name)+'"/></div>'+
-   '<div class="field"><label class="f">Tagline</label><input id="s_tagline" value="'+esc(s.tagline)+'"/></div>'+
-   '<div class="field"><label class="f">Logo</label><div class="photoBox"><div class="prev" id="s_prev">'+(s.logo?'<img src="'+esc(s.logo)+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"/>':'\uD83D\uDED2')+'</div><div style="flex:1"><input type="file" accept="image/*" id="s_logoFile"/><input type="hidden" id="s_logo" value="'+esc(s.logo)+'"/></div></div></div>'+
-   '<div class="row2"><div class="field"><label class="f">Phone</label><input id="s_phone" value="'+esc(s.phone)+'"/></div>'+
-   '<div class="field"><label class="f">WhatsApp</label><input id="s_whatsapp" value="'+esc(s.whatsapp)+'" placeholder="91XXXXXXXXXX"/></div></div>'+
-   '<div class="field"><label class="f">Address</label><input id="s_address" value="'+esc(s.address)+'"/></div>'+
-   '<div class="row2"><div class="field"><label class="f">Khulne ka time</label><input id="s_hours" value="'+esc(s.hours)+'"/></div>'+
-   '<div class="field"><label class="f">UPI ID (payment)</label><input id="s_upi" value="'+esc(s.upi)+'" placeholder="naam@upi"/></div></div>'+
-   '<div class="row3"><div class="field"><label class="f">GSTIN</label><input id="s_gstin" value="'+esc(s.gstin)+'"/></div>'+
-   '<div class="field"><label class="f">Kam stock alert</label><input id="s_low" inputmode="numeric" value="'+esc(s.lowStock)+'"/></div>'+
-   '<div class="field"><label class="f">Expiry alert (din)</label><input id="s_exp" inputmode="numeric" value="'+esc(s.expiryDays)+'"/></div></div>'+
-   '<div class="field"><label class="f">Currency symbol</label><input id="s_cur" value="'+esc(s.currency)+'"/></div>'+
-   '<div class="field"><label class="f">Offer banner (public app me upar dikhega)</label><input id="s_offer" value="'+esc(s.offerBanner)+'" placeholder="jaise: Aaj 10% off sab par!"/></div>'+
-   '<div class="field"><label class="f">Delivery note</label><input id="s_deliv" value="'+esc(s.deliveryNote)+'" placeholder="jaise: 500 se upar free delivery"/></div>'+
-   '<div class="field"><label class="f">Delivery charge (\u20B9, 0 = free)</label><input id="s_delc" inputmode="numeric" value="'+esc(s.deliveryCharge)+'"/></div>'+
-   '<div class="field"><label class="f">Order webhook URL (optional \u2014 naye order apne-aap yahan bhejein)</label><input id="s_webhook" value="'+esc(s.orderWebhook)+'" placeholder="https://..."/></div>'+
-   '<div class="field"><label class="f">Orders list URL (optional \u2014 online orders laane ke liye)</label><input id="s_ordersurl" value="'+esc(s.ordersUrl)+'" placeholder="https://..."/></div>'+
-   '<button class="btn full" onclick="saveSet()">Save karein</button></div>'+
-   '<h3 class="sec" style="margin-top:18px">Admin PIN</h3><div class="card"><div class="row2"><input id="newPin" type="password" placeholder="Naya PIN"/><button class="btn" onclick="changePin()">Badlein</button></div><div class="note" style="margin-top:8px">Abhi ka PIN: '+getPin()+'</div></div>'+
-   '<h3 class="sec" style="margin-top:18px">Backup</h3><div class="card"><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="btn gray sm" onclick="exportJSON()">\u2B07 JSON backup</button><button class="btn gray sm" onclick="exportCSV()">\u2B07 CSV</button><button class="btn gray sm" onclick="$(\'impFile\').click()">\u2B06 JSON import</button><input type="file" id="impFile" accept=".json" class="hidden"/></div></div>';
-  $('#s_logoFile').onchange=function(e){var f=e.target.files[0];if(f)compress(f,300,0.7,function(u){$('#s_logo').value=u;$('#s_prev').innerHTML='<img src="'+u+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px"/>'})};
-  $('#impFile').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{DATA=JSON.parse(r.result);saveData();render()}catch(x){alert('File galat hai')}};r.readAsText(f)};
+  $('#view').innerHTML='<h3 class="sec">'+t('shopDetails')+'</h3><div class="card">'+
+   '<div class="field"><label class="f">'+t('shopName')+'</label><input id="s_name" value="'+esc(s.name)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('tagline')+'</label><input id="s_tagline" value="'+esc(s.tagline)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('logo')+'</label><div class="photoBox"><div class="prev" id="s_prev">'+(s.logo?'<img src="'+esc(s.logo)+'" style="width:100%;height:100%;object-fit:cover;border-radius:16px"/>':'\uD83D\uDED2')+'</div><div style="flex:1"><input type="file" accept="image/*" id="s_logoFile"/><input type="hidden" id="s_logo" value="'+esc(s.logo)+'"/></div></div></div>'+
+   '<div class="row2"><div class="field"><label class="f">'+t('phone')+'</label><input id="s_phone" value="'+esc(s.phone)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('whatsapp')+'</label><input id="s_whatsapp" value="'+esc(s.whatsapp)+'" placeholder="91XXXXXXXXXX"/></div></div>'+
+   '<div class="field"><label class="f">'+t('address')+'</label><input id="s_address" value="'+esc(s.address)+'"/></div>'+
+   '<div class="row2"><div class="field"><label class="f">'+t('hours')+'</label><input id="s_hours" value="'+esc(s.hours)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('upi')+'</label><input id="s_upi" value="'+esc(s.upi)+'"/></div></div>'+
+   '<div class="row3"><div class="field"><label class="f">'+t('gstin')+'</label><input id="s_gstin" value="'+esc(s.gstin)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('lowAlert')+'</label><input id="s_low" inputmode="numeric" value="'+esc(s.lowStock)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('expAlert')+'</label><input id="s_exp" inputmode="numeric" value="'+esc(s.expiryDays)+'"/></div></div>'+
+   '<div class="field"><label class="f">'+t('currency')+'</label><input id="s_cur" value="'+esc(s.currency)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('offerBanner')+'</label><input id="s_offer" value="'+esc(s.offerBanner)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('deliveryNote')+'</label><input id="s_deliv" value="'+esc(s.deliveryNote)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('deliveryCharge')+'</label><input id="s_delc" inputmode="numeric" value="'+esc(s.deliveryCharge)+'"/></div>'+
+   '<div class="field"><label class="f">'+t('orderWebhook')+'</label><input id="s_webhook" value="'+esc(s.orderWebhook)+'" placeholder="https://..."/></div>'+
+   '<div class="field"><label class="f">'+t('ordersUrl')+'</label><input id="s_ordersurl" value="'+esc(s.ordersUrl)+'" placeholder="https://..."/></div>'+
+   '<button class="btn full" onclick="saveSet()">'+t('save')+'</button></div>'+
+   '<h3 class="sec" style="margin-top:18px">'+t('adminPin')+'</h3><div class="card"><div class="row2"><input id="newPin" type="password" placeholder="'+esc(t('newPin'))+'"/><button class="btn" onclick="changePin()">'+t('change')+'</button></div><div class="note" style="margin-top:9px">'+t('currentPin')+' '+getPin()+'</div></div>'+
+   '<h3 class="sec" style="margin-top:18px">'+t('backup')+'</h3><div class="card"><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="btn gray sm" onclick="exportJSON()">'+t('jsonBackup')+'</button><button class="btn gray sm" onclick="exportCSV()">'+t('csv')+'</button><button class="btn gray sm" onclick="$(\'impFile\').click()">'+t('importJson')+'</button><input type="file" id="impFile" accept=".json" class="hidden"/></div></div>';
+  $('#s_logoFile').onchange=function(e){var f=e.target.files[0];if(f)compress(f,300,0.7,function(u){$('#s_logo').value=u;$('#s_prev').innerHTML='<img src="'+u+'" style="width:100%;height:100%;object-fit:cover;border-radius:16px"/>'})};
+  $('#impFile').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{DATA=JSON.parse(r.result);saveData();render()}catch(x){alert(t('badFile'))}};r.readAsText(f)};
 }
 function saveSet(){
   var s=DATA.shop;
   s.name=val('#s_name');s.tagline=val('#s_tagline');s.logo=val('#s_logo');s.phone=val('#s_phone');s.whatsapp=val('#s_whatsapp');
-  s.address=val('#s_address');s.hours=val('#s_hours');s.upi=val('#s_upi');s.gstin=val('#s_gstin');s.lowStock=Number(val('#s_low'))||5;s.expiryDays=Number(val('#s_exp'))||30;s.currency=val('#s_cur')||'\u20B9';s.offerBanner=val('#s_offer');s.deliveryNote=val('#s_deliv');s.deliveryCharge=Number(val('#s_delc'))||0;s.orderWebhook=val('#s_webhook');s.ordersUrl=val('#s_ordersurl');
-  saveData();alert('Save ho gaya \u2713');
+  s.address=val('#s_address');s.hours=val('#s_hours');s.upi=val('#s_upi');s.gstin=val('#s_gstin');s.lowStock=Number(val('#s_low'))||5;s.expiryDays=Number(val('#s_exp'))||30;s.currency=val('#s_cur')||'\u20B9';
+  s.offerBanner=val('#s_offer');s.deliveryNote=val('#s_deliv');s.deliveryCharge=Number(val('#s_delc'))||0;s.orderWebhook=val('#s_webhook');s.ordersUrl=val('#s_ordersurl');
+  saveData();alert(t('saved'));
 }
-function changePin(){var v=$('#newPin').value.trim();if(v.length<4){alert('Kam se kam 4 ank');return}localStorage.setItem(PIN_KEY,v);$('#newPin').value='';alert('PIN badal gaya \u2713')}
+function changePin(){var v=$('#newPin').value.trim();if(v.length<4){alert(t('pinShort'));return}localStorage.setItem(PIN_KEY,v);$('#newPin').value='';alert(t('pinChanged'))}
 function exportJSON(){dl('grocery-backup.json',JSON.stringify(DATA,null,2))}
 function exportCSV(){var ps=DATA.products||[];var cols=['name','brand','category','unit','price','mrp','cost','gst','stock','expiry','barcode','hsn','batch','supplier','tags','desc','available','featured'];var rows=[cols.join(',')];ps.forEach(function(p){rows.push(cols.map(function(c){var v=p[c]==null?'':String(p[c]);return '"'+v.replace(/"/g,'""')+'"'}).join(','))});dl('grocery-items.csv',rows.join('\n'))}
 function dl(name,text){var b=new Blob([text],{type:'application/octet-stream'});var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
 
-/* ---------- orders ---------- */
 var ORD_KEY='gs_admin_orders';
 function loadAdminOrders(){try{return JSON.parse(localStorage.getItem(ORD_KEY))||[]}catch(e){return[]}}
 function saveAdminOrders(a){try{localStorage.setItem(ORD_KEY,JSON.stringify(a))}catch(e){}}
-function orderStatuses(){return ['Naya','Packing','Bhej diya','Pura','Cancel']}
+function orderStatuses(){return [t('stNew'),t('stPack'),t('stShip'),t('stDone'),t('stCancel')]}
 function renderOrders(){
   var a=loadAdminOrders();
   var list=a.slice().reverse().map(function(o){
     var items=(o.items||[]).map(function(it){return esc(it.name)+(it.qty>1?' x'+it.qty:'')}).join(', ');
-    return '<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center"><b>'+esc(o.id)+'</b><span class="note">'+(o.at?esc(new Date(o.at).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})):'')+'</span></div>'+
-     '<div style="margin-top:6px">'+esc(o.name||'')+(o.phone?' \u00B7 '+esc(o.phone):'')+'</div>'+
-     (o.address?'<div class="note">'+esc(o.address)+'</div>':'')+
-     '<div class="note" style="margin-top:4px">'+items+'</div>'+
-     '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><b>'+money(o.total)+'</b><select onchange="setOrderStatus(\''+esc(o.id)+'\',this.value)">'+orderStatuses().map(function(s){return '<option'+(o.status===s?' selected':'')+'>'+s+'</option>'}).join('')+'</select></div>'+
-     '<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn gray sm" onclick="delOrder(\''+esc(o.id)+'\')">Delete</button>'+(o.phone?'<a class="btn gray sm" style="text-decoration:none" href="tel:'+esc(o.phone)+'">Call</a><a class="btn gray sm" style="text-decoration:none" href="https://wa.me/91'+esc(String(o.phone).replace(/[^0-9]/g,'').slice(-10))+'">WhatsApp</a>':'')+'</div></div>';
+    return '<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>'+esc(o.id)+'</b><span class="note">'+(o.at?esc(new Date(o.at).toLocaleString(LANG==='hi'?'hi-IN':'en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})):'')+'</span></div>'+
+     '<div style="margin-top:8px">'+esc(o.name||'')+(o.phone?' \u00B7 '+esc(o.phone):'')+'</div>'+(o.address?'<div class="note">'+esc(o.address)+'</div>':'')+
+     '<div class="note" style="margin-top:5px">'+items+'</div>'+
+     '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px"><b>'+money(o.total)+'</b><select style="width:auto" onchange="setOrderStatus(\''+esc(o.id)+'\',this.value)">'+orderStatuses().map(function(s){return '<option'+(o.status===s?' selected':'')+'>'+s+'</option>'}).join('')+'</select></div>'+
+     '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn gray sm" onclick="delOrder(\''+esc(o.id)+'\')">'+t('del')+'</button>'+(o.phone?'<a class="btn gray sm" style="text-decoration:none" href="tel:'+esc(o.phone)+'">'+t('phone')+'</a><a class="btn gray sm" style="text-decoration:none" href="https://wa.me/91'+esc(String(o.phone).replace(/[^0-9]/g,'').slice(-10))+'">WhatsApp</a>':'')+'</div></div>';
   }).join('');
-  $('#view').innerHTML=
-   '<div class="banner ok">Total orders: '+a.length+'</div>'+
-   '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px"><button class="btn" onclick="addOrder()">\u2795 Naya order jodein</button><button class="btn gray" onclick="pullOrders()">\u2B07 Online se laaein</button></div>'+
-   '<div class="note" style="margin-bottom:10px">Grahak WhatsApp par order bhejta hai; chahein to yahan record bhi rakhein aur status track karein.</div>'+
-   (list||'<div class="note" style="text-align:center;padding:20px">Abhi koi order nahi.</div>');
+  $('#view').innerHTML='<div class="banner ok">'+t('totalOrders')+': '+a.length+'</div>'+
+   '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:12px"><button class="btn" onclick="addOrder()">+ '+t('addOrder')+'</button><button class="btn gray" onclick="pullOrders()">'+t('loadOnline')+'</button></div>'+
+   '<div class="note" style="margin:0 4px 12px">'+t('ordersNote')+'</div>'+(list||'<div class="note" style="text-align:center;padding:22px">'+t('noOrders')+'</div>');
 }
 function setOrderStatus(id,st){var a=loadAdminOrders();a.forEach(function(o){if(o.id===id)o.status=st});saveAdminOrders(a)}
-function delOrder(id){if(!confirm('Order delete karein?'))return;saveAdminOrders(loadAdminOrders().filter(function(o){return o.id!==id}));renderOrders()}
+function delOrder(id){if(!confirm(t('confirmDel')))return;saveAdminOrders(loadAdminOrders().filter(function(o){return o.id!==id}));renderOrders()}
 function addOrder(){
-  var name=prompt('Grahak ka naam:');if(!name)return;
-  var phone=prompt('Mobile number:')||'';
-  var addr=prompt('Address (khali chhod sakte hain):')||'';
-  var items=prompt('Items (jaise: Atta 5kg x1, Tel 1L x2):')||'';
-  var total=Number(prompt('Total (\u20B9):')||0)||0;
-  var o={id:'ORD-'+Date.now().toString(36).toUpperCase().slice(-6),at:new Date().toISOString(),name:name,phone:phone,address:addr,items:[{name:items,qty:1}],total:total,status:'Naya'};
+  var name=prompt(t('cName'));if(!name)return;
+  var phone=prompt(t('cPhone'))||'';var addr=prompt(t('cAddr'))||'';var items=prompt(t('cItems'))||'';var total=Number(prompt(t('cTotal'))||0)||0;
+  var o={id:'ORD-'+Date.now().toString(36).toUpperCase().slice(-6),at:new Date().toISOString(),name:name,phone:phone,address:addr,items:[{name:items,qty:1}],total:total,status:t('stNew')};
   var a=loadAdminOrders();a.push(o);saveAdminOrders(a);renderOrders();
 }
 async function pullOrders(){
-  var url=DATA.shop.ordersUrl;if(!url){alert('Pehle Dukaan tab me "Orders list URL" daaliye.');return}
+  var url=DATA.shop.ordersUrl;if(!url){alert(t('ordersUrl'));return}
   try{var r=await fetch(url+(url.indexOf('?')>-1?'&':'?')+'t='+Date.now(),{cache:'no-store'});var j=await r.json();
     var arr=Array.isArray(j)?j:(j.orders||[]);var a=loadAdminOrders();var have={};a.forEach(function(o){have[o.id]=1});
-    arr.forEach(function(o){if(o&&o.id&&!have[o.id])a.push(o)});
-    saveAdminOrders(a);renderOrders();alert('Orders laa liye \u2713');
-  }catch(e){alert('Laane me dikkat: '+e.message)}
+    arr.forEach(function(o){if(o&&o.id&&!have[o.id])a.push(o)});saveAdminOrders(a);renderOrders();
+  }catch(e){alert(e.message)}
 }
 
-/* ---------- cloud sync ---------- */
+function setSync(m){syncMsg=m;var e=$('#syncMsg');if(e)e.textContent=m}
 function renderCloud(){
   var ready=!!CFG.token;
   $('#view').innerHTML=
-   '<div class="banner '+(ready?'ok':'warn')+'">'+(ready?'\u2705 Cloud juda hua hai. Data apne-aap online save hota hai.'+ (CFG.lastSync?' Last sync: '+fmtSync():'') :'\u26A0\uFE0F Ek baar GitHub token daaliye, uske baad sab automatic chalega.')+'</div>'+
-   '<div class="card"><h3 class="sec">Cloud settings</h3>'+
-   '<div class="note" style="margin-bottom:10px">Owner: <b>'+esc(CFG.owner)+'</b> &middot; Repo: <b>'+esc(CFG.repo)+'</b> &middot; File: <b>'+esc(CFG.path)+'</b></div>'+
-   '<a class="btn full" style="display:block;text-align:center;text-decoration:none;margin-bottom:12px" href="https://github.com/settings/tokens/new?scopes=public_repo&description=Apni%20Dukaan" target="_blank" rel="noopener">\uD83D\uDD11 Token banayein (GitHub kholiye)</a>'+'<div class="field"><label class="f">Token (copy karke yahan paste karein)</label><input id="c_token" type="password" placeholder="ghp_... ya github_pat_..." value="'+esc(CFG.token)+'"/></div>'+
-   '<label class="switch"><input type="checkbox" id="c_auto"'+(CFG.autoPush?' checked':'')+'/> Har save par apne-aap online bhejein (auto-sync)</label>'+
-   '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:10px"><button class="btn" onclick="saveCloud()">Save token</button><button class="btn gray" onclick="cloudPush(false)">\u2601 Push (bhejein)</button><button class="btn gray" onclick="cloudPull()">\u2B07 Pull (laein)</button></div>'+
-   '<div class="syncbar" id="syncMsg" style="margin-top:10px">'+esc(syncMsg||'')+'</div></div>'+
-   '<div class="card"><h3 class="sec">Public app link (grahako ko bhejein)</h3><div class="note" style="word-break:break-all;margin-bottom:8px">'+PUBLIC_URL+'</div><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="btn gray sm" onclick="copy(\''+PUBLIC_URL+'\')">Copy link</button><a class="btn gray sm" href="'+PUBLIC_URL+'" target="_blank" style="text-decoration:none">Kholkar dekhein</a></div></div>'+
-   '<div class="card"><h3 class="sec">Token kaise banayein (ek baar)</h3><div class="note">1. github.com par login karein \u2192 Settings.<br>2. Developer settings \u2192 Personal access tokens \u2192 <b>Tokens (classic)</b>.<br>3. <b>Generate new token (classic)</b> dabaiye.<br>4. Note me "grocery app" likhein, Expiration me 90 days ya No expiration chunein.<br>5. Scope me sirf <b>public_repo</b> ko tick karein.<br>6. Generate \u2192 token copy karein \u2192 upar box me paste karke Save dabaiye.<br><br>Ye token sirf isi phone/browser me safe rehta hai.</div></div>';
+   '<div class="banner '+(ready?'ok':'warn')+'">'+(ready?t('cloudConnected')+(CFG.lastSync?' \u00B7 '+fmtSync():''):t('connectOnce'))+'</div>'+
+   '<div class="card"><h3 class="sec">'+t('cloudSettings')+'</h3>'+
+   '<div class="note" style="margin-bottom:12px">'+esc(CFG.owner)+' / '+esc(CFG.repo)+' / '+esc(CFG.path)+'</div>'+
+   '<a class="btn full" style="display:block;text-align:center;text-decoration:none;margin-bottom:12px" href="https://github.com/settings/tokens/new?scopes=public_repo&description=Apni%20Dukaan" target="_blank" rel="noopener">'+t('createToken')+'</a>'+
+   '<div class="field"><label class="f">'+t('tokenLabel')+'</label><input id="c_token" type="password" placeholder="ghp_..." value="'+esc(CFG.token)+'"/></div>'+
+   '<label class="switch"><input type="checkbox" id="c_auto"'+(CFG.autoPush?' checked':'')+'/> '+t('autoSync')+'</label>'+
+   '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px"><button class="btn" onclick="saveCloud()">'+t('saveToken')+'</button><button class="btn gray" onclick="cloudPush(false)">'+t('push')+'</button><button class="btn gray" onclick="cloudPull()">'+t('pull')+'</button></div>'+
+   '<div class="syncbar" id="syncMsg" style="margin-top:12px">'+esc(syncMsg||'')+'</div></div>'+
+   '<div class="card"><h3 class="sec">'+t('publicLink')+'</h3><div class="note" style="word-break:break-all;margin-bottom:10px">'+PUBLIC_URL+'</div><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="btn gray sm" onclick="copy(\''+PUBLIC_URL+'\')">'+t('copyLink')+'</button><a class="btn gray sm" style="text-decoration:none" href="'+PUBLIC_URL+'" target="_blank">'+t('open')+'</a></div></div>'+
+   '<div class="card"><h3 class="sec">'+t('howToken')+'</h3><div class="note">'+t('steps')+'<br><br>'+t('tokenSafe')+'</div></div>';
   $('#c_auto').onchange=function(){CFG.autoPush=this.checked;saveCfg()};
 }
-var syncMsg='';
-function setSync(m){syncMsg=m;var e=$('#syncMsg');if(e)e.textContent=m}
-function saveCloud(){CFG.token=val('#c_token');CFG.autoPush=$('#c_auto').checked;saveCfg();setSync(CFG.token?'Token save ho gaya \u2713':'Token khali hai');renderCloud()}
-function copy(t){try{navigator.clipboard.writeText(t);alert('Copy ho gaya \u2713')}catch(e){prompt('Copy karein:',t)}}
-var pushing=false,pushQueued=false;
-function fmtSync(){if(!CFG.lastSync)return '';try{return new Date(CFG.lastSync).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
+function saveCloud(){CFG.token=val('#c_token');CFG.autoPush=$('#c_auto').checked;saveCfg();setSync(CFG.token?t('tokenSaved'):t('tokenEmpty'));renderCloud()}
+function copy(x){try{navigator.clipboard.writeText(x);alert(t('copied'))}catch(e){prompt(t('copyNow'),x)}}
 async function cloudPush(silent){
-  if(!CFG.token){if(!silent)alert('Pehle Cloud tab me GitHub token daaliye.');return}
+  if(!CFG.token){if(!silent)alert(t('needToken'));return}
   if(pushing){pushQueued=true;return}
-  pushing=true;
-  setSync('Online bheja ja raha hai...');
-  try{
-    await doPush();
-    CFG.lastSync=new Date().toISOString();saveCfg();
-    setSync('\u2705 Online save ho gaya \u2014 '+fmtSync());
-  }catch(e){setSync('\u274C Error: '+e.message);if(!silent)alert('Push fail: '+e.message)}
+  pushing=true;setSync(t('pushing'));
+  try{await doPush();CFG.lastSync=new Date().toISOString();saveCfg();setSync('\u2705 '+t('onlineSaved')+' \u00B7 '+fmtSync())}
+  catch(e){setSync('\u274C '+e.message);if(!silent)alert(t('push')+' \u274C '+e.message)}
   finally{pushing=false;if(pushQueued){pushQueued=false;cloudPush(true)}}
 }
 async function doPush(){
   var base=API+'/repos/'+CFG.owner+'/'+CFG.repo;
   var H={'Authorization':'Bearer '+CFG.token,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
-  var json=JSON.stringify(DATA);
-  var lastErr=null;
+  var json=JSON.stringify(DATA);var lastErr=null;
   for(var attempt=0;attempt<5;attempt++){
     try{
       var br=await fetch(base+'/git/blobs',{method:'POST',headers:H,body:JSON.stringify({content:b64(json),encoding:'base64'})});
@@ -400,7 +411,7 @@ async function doPush(){
       var tr=await fetch(base+'/git/trees',{method:'POST',headers:H,body:JSON.stringify({base_tree:co.tree.sha,tree:[{path:CFG.path,mode:'100644',type:'blob',sha:blob.sha}]})});
       if(!tr.ok)throw new Error('tree '+tr.status);var tree=await tr.json();
       var ncr=await fetch(base+'/git/commits',{method:'POST',headers:H,body:JSON.stringify({message:'Update inventory '+new Date().toISOString(),tree:tree.sha,parents:[parent]})});
-      if(!ncr.ok)throw new Error('newcommit '+ncr.status);var nc=await ncr.json();
+      if(!ncr.ok)throw new Error('commit '+ncr.status);var nc=await ncr.json();
       var ur=await fetch(base+'/git/refs/heads/'+CFG.branch,{method:'PATCH',headers:H,body:JSON.stringify({sha:nc.sha,force:false})});
       if(!ur.ok)throw new Error('update '+ur.status);
       return;
@@ -409,19 +420,19 @@ async function doPush(){
   throw lastErr||new Error('push failed');
 }
 async function cloudPull(){
-  if(!CFG.token){alert('Pehle token daaliye.');return}
-  setSync('Online se laa rahe hain...');
-  try{
-    var url='https://raw.githubusercontent.com/'+CFG.owner+'/'+CFG.repo+'/'+CFG.branch+'/'+CFG.path+'?t='+Date.now();
+  if(!CFG.token){alert(t('needToken'));return}
+  setSync(t('pullLoading'));
+  try{var url='https://raw.githubusercontent.com/'+CFG.owner+'/'+CFG.repo+'/'+CFG.branch+'/'+CFG.path+'?t='+Date.now();
     var r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
-    DATA=await r.json();try{localStorage.setItem(DATA_KEY,JSON.stringify(DATA))}catch(e){};render();setSync('\u2705 Online se aa gaya \u2014 '+timeNow());
-  }catch(e){setSync('\u274C Error: '+e.message)}
+    DATA=await r.json();try{localStorage.setItem(DATA_KEY,JSON.stringify(DATA))}catch(e){};render();setSync('\u2705 '+t('loadedOnline')+' \u00B7 '+timeNow());
+  }catch(e){setSync('\u274C '+e.message)}
 }
 function schedulePush(){if(!CFG.autoPush||!CFG.token)return;clearTimeout(pushTimer);pushTimer=setTimeout(function(){cloudPush(true)},1800)}
 
-/* ---------- boot ---------- */
-function boot(){loadCfg();loadData();if(!CFG.token)tab='cloud';renderTabs();render();if(CFG.token)setSync(CFG.lastSync?'Last sync: '+fmtSync():'');}
-loadCfg();loadData();
+function boot2(){loadCfg();loadData();renderTabs();render();setSync(CFG.lastSync?fmtSync():'');}
+$('#gateTitle').textContent=t('title');$('#gateSub').textContent=t('subtitle');$('#pinGo').textContent=t('unlock');$('#gateHint').innerHTML=t('firstTime').replace(/1234/g,'<b>1234</b>');
+$('#pinIn').placeholder=t('enterPin');
+document.documentElement.lang=(LANG==='hi'?'hi':'en');
 if(sessionStorage.getItem('gs_open')==='1')unlock();else{$('#pinIn').focus()}
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
 </script>
