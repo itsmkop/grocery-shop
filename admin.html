@@ -310,7 +310,7 @@ function dl(name,text){var b=new Blob([text],{type:'application/octet-stream'});
 function renderCloud(){
   var ready=!!CFG.token;
   $('#view').innerHTML=
-   '<div class="banner '+(ready?'ok':'warn')+'">'+(ready?'\u2705 Cloud juda hua hai. Data apne-aap online save hota hai.'+ (CFG.lastSync?' Last: '+timeNow():'') :'\u26A0\uFE0F Ek baar GitHub token daaliye, uske baad sab automatic chalega.')+'</div>'+
+   '<div class="banner '+(ready?'ok':'warn')+'">'+(ready?'\u2705 Cloud juda hua hai. Data apne-aap online save hota hai.'+ (CFG.lastSync?' Last sync: '+fmtSync():'') :'\u26A0\uFE0F Ek baar GitHub token daaliye, uske baad sab automatic chalega.')+'</div>'+
    '<div class="card"><h3 class="sec">Cloud settings</h3>'+
    '<div class="note" style="margin-bottom:10px">Owner: <b>'+esc(CFG.owner)+'</b> &middot; Repo: <b>'+esc(CFG.repo)+'</b> &middot; File: <b>'+esc(CFG.path)+'</b></div>'+
    '<a class="btn full" style="display:block;text-align:center;text-decoration:none;margin-bottom:12px" href="https://github.com/settings/tokens/new?scopes=public_repo&description=Apni%20Dukaan" target="_blank" rel="noopener">\uD83D\uDD11 Token banayein (GitHub kholiye)</a>'+'<div class="field"><label class="f">Token (copy karke yahan paste karein)</label><input id="c_token" type="password" placeholder="ghp_... ya github_pat_..." value="'+esc(CFG.token)+'"/></div>'+
@@ -325,23 +325,41 @@ var syncMsg='';
 function setSync(m){syncMsg=m;var e=$('#syncMsg');if(e)e.textContent=m}
 function saveCloud(){CFG.token=val('#c_token');CFG.autoPush=$('#c_auto').checked;saveCfg();setSync(CFG.token?'Token save ho gaya \u2713':'Token khali hai');renderCloud()}
 function copy(t){try{navigator.clipboard.writeText(t);alert('Copy ho gaya \u2713')}catch(e){prompt('Copy karein:',t)}}
+var pushing=false,pushQueued=false;
+function fmtSync(){if(!CFG.lastSync)return '';try{return new Date(CFG.lastSync).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
 async function cloudPush(silent){
   if(!CFG.token){if(!silent)alert('Pehle Cloud tab me GitHub token daaliye.');return}
+  if(pushing){pushQueued=true;return}
+  pushing=true;
   setSync('Online bheja ja raha hai...');
   try{
-    var base=API+'/repos/'+CFG.owner+'/'+CFG.repo;
-    var H={'Authorization':'Bearer '+CFG.token,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
-    var json=JSON.stringify(DATA);
-    var br=await fetch(base+'/git/blobs',{method:'POST',headers:H,body:JSON.stringify({content:b64(json),encoding:'base64'})});
-    if(!br.ok)throw new Error('blob '+br.status);var blob=await br.json();
-    var rr=await fetch(base+'/git/ref/heads/'+CFG.branch,{headers:H});if(!rr.ok)throw new Error('ref '+rr.status);var ref=await rr.json();var parent=ref.object.sha;
-    var cr=await fetch(base+'/git/commits/'+parent,{headers:H});var co=await cr.json();
-    var tr=await fetch(base+'/git/trees',{method:'POST',headers:H,body:JSON.stringify({base_tree:co.tree.sha,tree:[{path:CFG.path,mode:'100644',type:'blob',sha:blob.sha}]})});var tree=await tr.json();
-    var ncr=await fetch(base+'/git/commits',{method:'POST',headers:H,body:JSON.stringify({message:'Update inventory '+new Date().toISOString(),tree:tree.sha,parents:[parent]})});var nc=await ncr.json();
-    var ur=await fetch(base+'/git/refs/heads/'+CFG.branch,{method:'PATCH',headers:H,body:JSON.stringify({sha:nc.sha})});
-    if(!ur.ok)throw new Error('update '+ur.status);
-    CFG.lastSync=new Date().toISOString();saveCfg();setSync('\u2705 Online save ho gaya \u2014 '+timeNow());
-  }catch(e){setSync('\u274C Error: '+e.message);if(!silent)alert('Push fail: '+e.message+'\n\nToken check kijiye (public_repo scope).')}
+    await doPush();
+    CFG.lastSync=new Date().toISOString();saveCfg();
+    setSync('\u2705 Online save ho gaya \u2014 '+fmtSync());
+  }catch(e){setSync('\u274C Error: '+e.message);if(!silent)alert('Push fail: '+e.message)}
+  finally{pushing=false;if(pushQueued){pushQueued=false;cloudPush(true)}}
+}
+async function doPush(){
+  var base=API+'/repos/'+CFG.owner+'/'+CFG.repo;
+  var H={'Authorization':'Bearer '+CFG.token,'Accept':'application/vnd.github+json','Content-Type':'application/json'};
+  var json=JSON.stringify(DATA);
+  var lastErr=null;
+  for(var attempt=0;attempt<5;attempt++){
+    try{
+      var br=await fetch(base+'/git/blobs',{method:'POST',headers:H,body:JSON.stringify({content:b64(json),encoding:'base64'})});
+      if(!br.ok)throw new Error('blob '+br.status);var blob=await br.json();
+      var rr=await fetch(base+'/git/ref/heads/'+CFG.branch,{headers:H});if(!rr.ok)throw new Error('ref '+rr.status);var ref=await rr.json();var parent=ref.object.sha;
+      var cr=await fetch(base+'/git/commits/'+parent,{headers:H});if(!cr.ok)throw new Error('head '+cr.status);var co=await cr.json();
+      var tr=await fetch(base+'/git/trees',{method:'POST',headers:H,body:JSON.stringify({base_tree:co.tree.sha,tree:[{path:CFG.path,mode:'100644',type:'blob',sha:blob.sha}]})});
+      if(!tr.ok)throw new Error('tree '+tr.status);var tree=await tr.json();
+      var ncr=await fetch(base+'/git/commits',{method:'POST',headers:H,body:JSON.stringify({message:'Update inventory '+new Date().toISOString(),tree:tree.sha,parents:[parent]})});
+      if(!ncr.ok)throw new Error('newcommit '+ncr.status);var nc=await ncr.json();
+      var ur=await fetch(base+'/git/refs/heads/'+CFG.branch,{method:'PATCH',headers:H,body:JSON.stringify({sha:nc.sha,force:false})});
+      if(!ur.ok)throw new Error('update '+ur.status);
+      return;
+    }catch(e){lastErr=e;await new Promise(function(res){setTimeout(res,600+attempt*600)})}
+  }
+  throw lastErr||new Error('push failed');
 }
 async function cloudPull(){
   if(!CFG.token){alert('Pehle token daaliye.');return}
@@ -355,7 +373,7 @@ async function cloudPull(){
 function schedulePush(){if(!CFG.autoPush||!CFG.token)return;clearTimeout(pushTimer);pushTimer=setTimeout(function(){cloudPush(true)},1800)}
 
 /* ---------- boot ---------- */
-function boot(){loadCfg();loadData();if(!CFG.token)tab='cloud';renderTabs();render();if(CFG.token)setSync(CFG.lastSync?'Last sync: '+timeNow():'');}
+function boot(){loadCfg();loadData();if(!CFG.token)tab='cloud';renderTabs();render();if(CFG.token)setSync(CFG.lastSync?'Last sync: '+fmtSync():'');}
 loadCfg();loadData();
 if(sessionStorage.getItem('gs_open')==='1')unlock();else{$('#pinIn').focus()}
 </script>
