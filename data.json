@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "version": 1,
+    "updatedAt": "2026-10-22T00:00:00.000Z"
+  },
+  "shop": {
+    "name": "Apni Dukaan",
+    "owner": "",
+    "phone": "",
+    "whatsapp": "",
+    "address": "",
+    "tagline": "Aapki apni grocery shop",
+    "upi": "",
+    "gstin": "",
+    "hours": "8:00 AM - 9:00 PM",
+    "logo": "",
+    "currency": "₹",
+    "lowStock": 5,
+    "expiryDays": 30,
+    "categories": [
+      "Atta & Rice",
+      "Dal & Pulses",
+      "Oil & Ghee",
+      "Masala & Spices",
+      "Snacks",
+      "Dairy",
+      "Beverages",
+      "Personal Care",
+      "Household",
+      "Other"
+    ]
+  },
+  "products": []
+}
