@@ -1,17 +1,54 @@
-# Apni Dukaan — Grocery Shop App
+# Apni Dukaan — Grocery Shop
 
-Live grocery shop app. Do hisse:
+Ek hi code se **teen apps** — company, retailer aur grahak.
 
-- **Public app (grahako ke liye):** https://itsmkop.github.io/grocery-shop/
-- **Admin panel (aapke liye):** https://itsmkop.github.io/grocery-shop/admin.html
+| Role | Kaun | URL | Android app |
+|---|---|---|---|
+| **Company** | owner / distributor | https://itsmkop.github.io/grocery-shop/company/ | Apni Dukaan Company |
+| **Retailer** | dukaan malik | https://itsmkop.github.io/grocery-shop/retailer/ | Apni Dukaan Retailer |
+| **Public** | grahak | https://itsmkop.github.io/grocery-shop/ | Apni Dukaan |
 
-Data file: `data.json` (is repo me). Admin panel isi file ko update karta hai, public app wahi data live dikhata hai.
+Sab data ek hi file me: `data.json`
 
-## Admin panel
-- Default PIN: `1234` (Settings me badal sakte hain)
-- Ek baar GitHub token daaliye (Cloud tab me steps diye hain), uske baad har save apne-aap online chala jata hai.
-- Sab kuch edit ho sakta hai: naam, brand, price, MRP, photo, category, stock, expiry, barcode, HSN, GST, supplier, UPI, logo, etc.
+## Company app
+- Default PIN: `1234`
+- Retailer **add / edit / remove / block-unblock**
+- **Make public** — kaunsi dukaan public app me live dikhegi
+- Shop info, products, GitHub cloud sync
+
+## Retailer app
+- Login: **code + PIN** (company deta hai)
+- Apne products add / edit / delete
+- Sirf apne products dikhte hain — dusre retailer ka na dikhta hai na edit hota hai
+- Company block kare to Blocked screen
+
+## Public app
+- Grahak ke liye Flipkart-style shop
+- Company ke chune hue retailer ki dukaan + uske products
+- Search, cart, WhatsApp / UPI order, my orders
+
+## Cloud sync
+- Company aur Retailer app ke Cloud tab me ek baar GitHub token daalo
+- Uske baad har save apne-aap online chala jata hai
+- Token sirf us phone / browser me rehta hai
+
+## Android apps
+- Teen alag APK, alag package — ek hi project se (product flavors)
+- APK me **kuch bhi bundled nahi** — har app seedha website se load karta hai
+- Isliye: **website update = app update** (rebuild ki zaroorat nahi)
+- App kholne ke liye internet zaroori hai (pehli baar)
+
+## Repo layout
+```
+index.html            public app
+retailer/index.html   retailer app
+company/index.html    company app
+data.json             sabka data (retailers + products)
+```
+GitHub Pages: Settings → Pages → Branch `main`, Folder `/ (root)`
+
+Purana `admin.html` ab company app ka kaam karta hai — uski zaroorat nahi.
 
 ## Note
-- Token sirf aapke browser me rehta hai.
-- Photos apne-aap compress hoti hain (size kam rakhne ke liye).
+- Token sirf browser / phone me hi rehta hai
+- `data.json` public URL se padha ja sakta hai, aur block client-side hai — pakki security ke liye backend chahiye
