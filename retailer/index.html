@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0b7a3b"/>
+<title>Apni Dukaan — Retailer</title>
+<link rel="manifest" href="manifest.webmanifest"/>
+<style>
+:root{--blue:#2874F0;--grn:#0b7a3b;--dark:#172337;--red:#E53935;--amber:#F59E0B;--bg:#F1F3F6;--card:#fff;--tx:#212121;--mut:#7a8291;--sep:#e6e9ee}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:Roboto,-apple-system,"Segoe UI","Noto Sans Devanagari",sans-serif;background:var(--bg);color:var(--tx);padding-bottom:76px;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit;padding:0}
+input,select,textarea{font:inherit;width:100%;border:1px solid var(--sep);background:#fff;border-radius:8px;padding:12px 13px;font-size:15px;color:var(--tx);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--grn);box-shadow:0 0 0 2px rgba(11,122,59,.15)}
+.hidden{display:none!important}
+header.hd{position:sticky;top:0;z-index:30;background:var(--grn);color:#fff;padding:13px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+header.hd .ttl{font-size:16px;font-weight:700}
+header.hd .sub{font-size:11px;color:#cfe9d6;margin-top:1px}
+header.hd .st{margin-left:auto;font-size:11px;font-weight:700;border-radius:20px;padding:5px 10px;background:rgba(255,255,255,.16)}
+header.hd .st.ok{background:rgba(255,255,255,.28)}
+header.hd .st.err{background:rgba(229,57,53,.95)}
+header.hd .lang{font-size:11px;font-weight:800;background:rgba(255,255,255,.18);border-radius:6px;padding:6px 9px}
+main{max-width:900px;margin:0 auto;padding:12px 12px 0}
+.card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.card h3{margin:0 0 12px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card h3 .n{margin-left:auto;font-size:12px;color:var(--mut);font-weight:600}
+.row{display:flex;gap:9px;flex-wrap:wrap}
+.btn{background:var(--grn);color:#fff;font-weight:700;font-size:14px;border-radius:8px;padding:11px 16px}
+.btn.g{background:#e8f5e9;color:var(--grn)}
+.btn.gray{background:#eef0f4;color:var(--tx)}
+.btn.red{background:#fdecec;color:var(--red)}
+.btn.sm{padding:8px 12px;font-size:12.5px;border-radius:7px}
+.btn.full{width:100%;text-align:center;display:block}
+.field{margin-bottom:12px}
+.lbl{display:block;font-size:11.5px;color:var(--mut);margin:0 2px 6px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:520px){.g3{grid-template-columns:1fr 1fr}}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#f7f9fc;border-radius:10px;padding:13px;text-align:center}
+.stat b{display:block;font-size:22px;font-weight:800}
+.stat span{font-size:11.5px;color:var(--mut)}
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0b7a3b,#0a5c2e);padding:24px}
+.gate .box{background:#fff;border-radius:16px;padding:26px 22px;width:100%;max-width:360px;text-align:center}
+.gate .box .e{font-size:44px}
+.gate h2{margin:10px 0 4px;font-size:20px}
+.gate p{margin:0 0 18px;font-size:13px;color:var(--mut)}
+nav.bn{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--sep);display:flex}
+nav.bn button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 9px;font-size:10px;font-weight:700;color:#7a8291}
+nav.bn button.on{color:var(--grn)}
+nav.bn button .ic{font-size:19px;line-height:1}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:16px 16px 0 0}
+.sh{position:sticky;top:0;background:#fff;display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--sep);z-index:2}
+.sh b{font-size:16px}.sh .x{margin-left:auto;width:32px;height:32px;border-radius:50%;background:#eef0f4;font-size:15px}
+.sheet .in{padding:16px}
+.note{font-size:12px;color:var(--mut);line-height:1.55}
+.empty{text-align:center;padding:28px 16px;color:var(--mut);font-size:13px}
+.empty .big{font-size:44px;margin-bottom:8px}
+.pr{border:1px solid var(--sep);border-radius:9px;padding:11px;display:flex;gap:10px;align-items:center;margin-bottom:9px}
+.pr .ph{width:46px;height:46px;border-radius:7px;border:1px solid var(--sep);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--mut);flex:0 0 auto;overflow:hidden}
+.pr .ph img{width:100%;height:100%;object-fit:contain}
+.pr .nm{font-weight:600;font-size:13.5px}
+.pr .mt{font-size:12px;color:var(--mut);margin-top:2px}
+.chip{font-size:10.5px;font-weight:800;border-radius:20px;padding:3px 9px;text-transform:uppercase}
+.chip.on{background:#e8f5e9;color:var(--grn)}
+.chip.off{background:#fdecec;color:var(--red)}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:rgba(0,0,0,.88);color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;z-index:90;opacity:0;transition:opacity .25s;max-width:86%;text-align:center}
+.blocked{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#fdecec}
+.blocked .box{background:#fff;border-radius:16px;padding:28px 22px;max-width:380px;text-align:center}
+.blocked .e{font-size:52px}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="box">
+    <div class="e">&#127978;</div>
+    <h2 id="gTitle">Retailer Login</h2>
+    <p id="gSub">Company se mila code aur PIN daalo</p>
+    <div class="field"><input id="g_code" placeholder="Retailer code (e.g. MK01)" style="text-align:center;text-transform:uppercase"/></div>
+    <div class="field"><input id="g_pin" type="password" inputmode="numeric" placeholder="PIN" style="text-align:center;letter-spacing:4px"/></div>
+    <button class="btn full" onclick="gateGo()" id="gBtn">Login</button>
+    <div class="note" style="margin-top:14px" id="gNote">Code/PIN company (owner) deta hai.</div>
+  </div>
+</div>
+
+<div class="blocked hidden" id="blockedScr">
+  <div class="box">
+    <div class="e">&#9940;</div>
+    <h2 style="margin:10px 0 6px;font-size:20px">Account Blocked</h2>
+    <div class="note" id="blkMsg">Aapka account company ne block kar diya hai. Company se baat karein.</div>
+    <button class="btn gray full" style="margin-top:16px" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <header class="hd">
+    <div><div class="ttl" id="hTitle">Apni Dukaan</div><div class="sub" id="hSub">Retailer</div></div>
+    <button class="lang" onclick="toggleLang()" id="langBtn">EN</button>
+    <span class="st" id="hStatus">Local</span>
+  </header>
+  <main id="main"></main>
+  <nav class="bn" id="bnav"></nav>
+</div>
+
+<div class="ov hidden" id="ov"><div class="sheet" id="sheet"></div></div>
+<div id="toast"></div>
+
+<script>
+var API='https://api.github.com';
+var CFG=Object.assign({owner:'itsmkop',repo:'grocery-shop',branch:'main',path:'data.json',token:''},
+  JSON.parse(localStorage.getItem('gs_cloud')||'{}'));
+var DATA=null, ME=null, tab='home', curProd=null, LANG=localStorage.getItem('gs_r_lang')||'en';
+
+var I18N={
+ en:{home:'Home',products:'My Products',shop:'My Shop',cloud:'Cloud',settings:'Settings',logout:'Logout',
+   addProduct:'+ Add product',myProducts:'My products',edit:'Edit',del:'Del',save:'Save',name:'Name',brand:'Brand',
+   category:'Category',price:'Price',mrp:'MRP',stock:'Stock',unit:'Unit',expiry:'Expiry',photo:'Photo URL (optional)',
+   featured:'Featured',shopName:'Shop name',tagline:'Tagline',phone:'Phone',whatsapp:'WhatsApp',upi:'UPI ID',address:'Address',
+   hours:'Hours',delivery:'Delivery charge',offerBanner:'Offer banner',deliveryNote:'Delivery note',categories:'Categories (comma se)',
+   saveShop:'Save shop info',status:'Status',active:'Active',blocked:'Blocked',totalProducts:'Total products',
+   inStock:'In stock',outStock:'Out of stock',pushNow:'Save to cloud',pulled:'Cloud se load hua',saved:'Saved',
+   emptyProducts:'Abhi koi product nahi. Add karo.',confirmDel:'Product delete karein?',shopOnly:'Sirf aapke products dikhte hain.',
+   orders:'Orders',ordersNote:'Orders grahak WhatsApp pe bhejte hain. Neeche apna WhatsApp number set karo.',
+   welcome:'Welcome',quick:'Quick actions',pushNote:'Changes cloud pe bhejne ke liye Cloud tab me token daalo.',
+   changePin:'Change login PIN',newPin:'New PIN'},
+ hi:{home:'होम',products:'मेरे प्रोडक्ट',shop:'मेरी दुकान',cloud:'क्लाउड',settings:'सेटिंग',logout:'लॉगआउट',
+   addProduct:'+ प्रोडक्ट जोड़ें',myProducts:'मेरे प्रोडक्ट',edit:'एडिट',del:'हटाएँ',save:'सेव',name:'नाम',brand:'ब्रांड',
+   category:'श्रेणी',price:'कीमत',mrp:'MRP',stock:'स्टॉक',unit:'यूनिट',expiry:'एक्सपायरी',photo:'फोटो URL (वैकल्पिक)',
+   featured:'फ़ीचर्ड',shopName:'दुकान का नाम',tagline:'टैगलाइन',phone:'फ़ोन',whatsapp:'WhatsApp',upi:'UPI ID',address:'पता',
+   hours:'समय',delivery:'डिलीवरी चार्ज',offerBanner:'ऑफ़र बैनर',deliveryNote:'डिलीवरी नोट',categories:'श्रेणियाँ (कॉमा से)',
+   saveShop:'दुकान जानकारी सेव करें',status:'स्टेटस',active:'एक्टिव',blocked:'ब्लॉक्ड',totalProducts:'कुल प्रोडक्ट',
+   inStock:'स्टॉक में',outStock:'स्टॉक ख़त्म',pushNow:'क्लाउड पर सेव करें',pulled:'क्लाउड से लोड हुआ',saved:'सेव हो गया',
+   emptyProducts:'अभी कोई प्रोडक्ट नहीं। जोड़ें।',confirmDel:'प्रोडक्ट हटाएँ?',shopOnly:'सिर्फ़ आपके प्रोडक्ट दिखते हैं।',
+   orders:'ऑर्डर',ordersNote:'ऑर्डर ग्राहक WhatsApp पर भेजते हैं। नीचे अपना WhatsApp नंबर सेट करें।',
+   welcome:'स्वागत',quick:'त्वरित काम',pushNote:'बदलाव क्लाउड पर भेजने के लिए क्लाउड टैब में टोकन डालें।',
+   changePin:'लॉगिन PIN बदलें',newPin:'नया PIN'}
+};
+function t(k){var d=I18N[LANG]||I18N.en;return d[k]!=null?d[k]:(I18N.en[k]!=null?I18N.en[k]:k)}
+function toggleLang(){LANG=(LANG==='hi'?'en':'hi');localStorage.setItem('gs_r_lang',LANG);document.documentElement.lang=(LANG==='hi'?'hi':'en');render()}
+
+function $(s){return document.querySelector(s)}
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function num(n){var x=Number(n);return isNaN(x)?0:x}
+function toast(m){var el=$('#toast');el.textContent=m;el.style.opacity='1';clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0'},1900)}
+function saveCfg(){localStorage.setItem('gs_cloud',JSON.stringify(CFG))}
+function b64(s){return btoa(unescape(encodeURIComponent(s)))}
+function ub64(s){return decodeURIComponent(escape(atob(s)))}
+function uid(p){return (p||'x')+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36)}
+function nowISO(){return new Date().toISOString()}
+function setStatus(x,c){var e=$('#hStatus');e.textContent=x;e.className='st'+(c?' '+c:'')}
+
+function saveLocal(){try{localStorage.setItem('gs_r_data',JSON.stringify(DATA))}catch(e){}}
+function loadLocal(){try{DATA=JSON.parse(localStorage.getItem('gs_r_data'))||null}catch(e){DATA=null}}
+function myId(){return localStorage.getItem('gs_r_id')||''}
+function myProducts(){return ((DATA&&DATA.products)||[]).filter(function(p){return p.retailerId===myId()})}
+function rById(id){return ((DATA&&DATA.retailers)||[]).filter(function(r){return r.id===id})[0]}
+
+async function pullRemote(){
+  var u='https://raw.githubusercontent.com/'+CFG.owner+'/'+CFG.repo+'/'+CFG.branch+'/'+CFG.path+'?t='+Date.now();
+  var r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
+  return await r.json();
+}
+async function pull(){
+  setStatus('...');
+  try{ DATA=await pullRemote(); saveLocal(); afterLoad(); setStatus('Online','ok'); }
+  catch(e){ setStatus('Offline','err'); if(!DATA){toast('Data load nahi hua');} else afterLoad(); }
+}
+function afterLoad(){
+  ME=rById(myId());
+  if(!ME){logout();return}
+  if(ME.status==='blocked'){showBlocked();return}
+  $('#gate').classList.add('hidden');$('#blockedScr').classList.add('hidden');$('#app').classList.remove('hidden');
+  render();
+}
+function showBlocked(){
+  $('#gate').classList.add('hidden');$('#app').classList.add('hidden');
+  $('#blockedScr').classList.remove('hidden');
+  $('#blkMsg').innerHTML='Aapka account company ne block kar diya hai.<br>Company se baat karein.';
+}
+
+/* ============ login ============ */
+async function gateGo(){
+  var code=($('#g_code').value||'').trim().toUpperCase();
+  var pin=($('#g_pin').value||'').trim();
+  if(!code||!pin){toast('Code aur PIN daalo');return}
+  $('#gBtn').textContent='Checking...';
+  try{
+    var d=await pullRemote();
+    var r=(d.retailers||[]).filter(function(x){return (x.code||'').toUpperCase()===code})[0];
+    if(!r){toast('Ye code nahi mila');$('#gBtn').textContent='Login';return}
+    if(String(r.pin||'1234')!==pin){toast('Galat PIN');$('#gBtn').textContent='Login';return}
+    DATA=d; saveLocal(); localStorage.setItem('gs_r_id',r.id);
+    $('#gBtn').textContent='Login';
+    if(r.status==='blocked'){showBlocked();return}
+    ME=r; $('#gate').classList.add('hidden');$('#blockedScr').classList.add('hidden');$('#app').classList.remove('hidden');
+    render(); toast('Welcome, '+(r.name||''));
+  }catch(e){ toast('Login fail: '+e.message); $('#gBtn').textContent='Login'; }
+}
+function logout(){localStorage.removeItem('gs_r_id');location.reload()}
+
+/* ============ push (isolated: sirf apna record + apne products) ============ */
+async function push(){
+  if(!CFG.token){toast(t('pushNote'));tab='cloud';render();return}
+  setStatus('Saving...');
+  try{
+    var url=API+'/repos/'+CFG.owner+'/'+CFG.repo+'/contents/'+CFG.path;
+    var h={'Authorization':'token '+CFG.token,'Accept':'application/vnd.github+json'};
+    var g=await fetch(url+'?ref='+CFG.branch,{headers:h});
+    if(!g.ok){throw new Error('read '+g.status)}
+    var j=await g.json(); var sha=j.sha;
+    var remote=JSON.parse(ub64(j.content.replace(/\n/g,'')));
+    remote.retailers=remote.retailers||[];remote.products=remote.products||[];
+    var idx=-1;for(var i=0;i<remote.retailers.length;i++){if(remote.retailers[i].id===myId()){idx=i;break}}
+    if(idx<0){toast('Company ne aapka account hata diya hai');return}
+    if(remote.retailers[idx].status==='blocked'){saveLocal();showBlocked();return}
+    // only shop-info fields are writable by the retailer
+    var mine=ME||{};var allowed=['name','tagline','phone','whatsapp','upi','address','hours','logo','currency','lowStock','expiryDays','categories','offerBanner','deliveryNote','deliveryCharge'];
+    allowed.forEach(function(k){ if(mine[k]!==undefined) remote.retailers[idx][k]=mine[k]; });
+    // replace only my products
+    remote.products=remote.products.filter(function(p){return p.retailerId!==myId()}).concat(myProducts());
+    remote.meta=remote.meta||{};remote.meta.updatedAt=nowISO();
+    var body={message:'Retailer update '+nowISO(),content:b64(JSON.stringify(remote)),branch:CFG.branch,sha:sha};
+    var p=await fetch(url,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},h),body:JSON.stringify(body)});
+    if(!p.ok){var e=await p.json().catch(function(){return{}});throw new Error(e.message||('HTTP '+p.status))}
+    DATA=remote;saveLocal();setStatus('Saved','ok');toast(t('saved'));
+  }catch(e){setStatus('Save failed','err');toast('Push failed: '+e.message)}
+}
+
+/* ============ nav ============ */
+function renderNav(){
+  var items=[['home','\uD83C\uDFE0',t('home')],['products','\uD83D\uDCE6',t('products')],['shop','\uD83C\uDFEA',t('shop')],['cloud','\u2601\uFE0F',t('cloud')],['settings','\u2699\uFE0F',t('settings')]];
+  $('#bnav').innerHTML=items.map(function(it){return '<button class="'+(tab===it[0]?'on':'')+'" data-t="'+it[0]+'"><span class="ic">'+it[1]+'</span>'+it[2]+'</button>'}).join('');
+  [].forEach.call($('#bnav').children,function(b){b.onclick=function(){tab=b.getAttribute('data-t');render()}});
+}
+function render(){
+  if(!DATA||!ME){return}
+  $('#hTitle').textContent=ME.name||'Apni Dukaan';
+  $('#hSub').textContent='Code: '+(ME.code||'')+' \u00B7 '+(ME.status==='blocked'?t('blocked'):t('active'));
+  $('#langBtn').textContent=(LANG==='hi'?'\u0939\u093F':'EN');
+  renderNav();
+  if(tab==='products')renderProducts();
+  else if(tab==='shop')renderShop();
+  else if(tab==='cloud')renderCloud();
+  else if(tab==='settings')renderSettings();
+  else renderHome();
+}
+
+/* ============ HOME ============ */
+function renderHome(){
+  var ps=myProducts();var inst=ps.filter(function(p){return !(p.available===false||p.stock===0||p.stock==='0')}).length;
+  $('#main').innerHTML=
+   '<div class="card"><h3>'+t('welcome')+', '+esc((ME.name||'').split(' ')[0])+'</h3>'+
+   '<div class="stats"><div class="stat"><b>'+ps.length+'</b><span>'+t('totalProducts')+'</span></div>'+
+   '<div class="stat"><b>'+inst+'</b><span>'+t('inStock')+'</span></div></div>'+
+   '<div class="row" style="margin-top:12px"><button class="btn" onclick="tab=\'products\';render()">'+t('addProduct')+'</button>'+
+   '<button class="btn gray" onclick="push()">'+t('pushNow')+'</button></div>'+
+   '<div class="note" style="margin-top:12px">'+t('shopOnly')+'</div></div>'+
+   '<div class="card"><h3>'+t('quick')+'</h3><div class="row">'+
+   '<button class="btn g sm" onclick="tab=\'shop\';render()">'+t('shop')+'</button>'+
+   '<button class="btn g sm" onclick="tab=\'cloud\';render()">'+t('cloud')+'</button>'+
+   (ME.whatsapp?'<a class="btn g sm" style="text-decoration:none" href="https://wa.me/'+String(ME.whatsapp).replace(/[^0-9]/g,'')+'" target="_blank" rel="noopener">WhatsApp</a>':'')+
+   '</div><div class="note" style="margin-top:12px">'+t('ordersNote')+'</div></div>';
+}
+
+/* ============ PRODUCTS (sirf apne) ============ */
+function renderProducts(){
+  var ps=myProducts();
+  var html='<div class="card"><h3>'+t('myProducts')+' <span class="n">'+ps.length+'</span></h3>'+
+    '<button class="btn full" onclick="editProduct(null)">'+t('addProduct')+'</button></div>';
+  if(!ps.length){html+='<div class="card"><div class="empty"><div class="big">&#128230;</div>'+t('emptyProducts')+'</div></div>'}
+  ps.forEach(function(p){
+    html+='<div class="card"><div class="pr">'+
+      '<div class="ph">'+(p.photo?'<img src="'+esc(p.photo)+'"/>':'\uD83D\uDED2')+'</div>'+
+      '<div style="flex:1;min-width:0"><div class="nm">'+esc(p.name)+'</div>'+
+      '<div class="mt">'+esc(p.unit||'')+(p.brand?' \u00B7 '+esc(p.brand):'')+' \u00B7 \u20B9'+esc(p.price)+(num(p.mrp)>num(p.price)?' <s>'+esc(p.mrp)+'</s>':'')+'</div>'+
+      '<div class="mt">'+t('stock')+': '+esc(p.stock==null?'':p.stock)+(p.featured?' \u00B7 \u2B50':'')+'</div></div>'+
+      '<div style="display:flex;flex-direction:column;gap:6px"><button class="btn g sm" onclick="editProduct(\''+p.id+'\')">'+t('edit')+'</button><button class="btn red sm" onclick="removeProduct(\''+p.id+'\')">'+t('del')+'</button></div>'+
+    '</div></div>';
+  });
+  $('#main').innerHTML=html;
+}
+function editProduct(id){
+  curProd=id;
+  var p=id?myProducts().filter(function(x){return x.id===id})[0]:{};
+  if(id&&!p){toast('Product nahi mila');return}
+  openSheet((id?t('edit'):t('addProduct'))+' \u2014 '+esc(p.name||''),
+    '<div class="field"><label class="lbl">'+t('name')+'</label><input id="f_name" value="'+esc(p.name)+'"/></div>'+
+    '<div class="g2"><div class="field"><label class="lbl">'+t('brand')+'</label><input id="f_brand" value="'+esc(p.brand)+'"/></div>'+
+    '<div class="field"><label class="lbl">'+t('category')+'</label><input id="f_cat" value="'+esc(p.category)+'"/></div></div>'+
+    '<div class="g3"><div class="field"><label class="lbl">'+t('price')+' \u20B9</label><input id="f_price" inputmode="numeric" value="'+esc(p.price)+'"/></div>'+
+    '<div class="field"><label class="lbl">'+t('mrp')+' \u20B9</label><input id="f_mrp" inputmode="numeric" value="'+esc(p.mrp)+'"/></div>'+
+    '<div class="field"><label class="lbl">'+t('stock')+'</label><input id="f_stock" inputmode="numeric" value="'+esc(p.stock)+'"/></div></div>'+
+    '<div class="g2"><div class="field"><label class="lbl">'+t('unit')+'</label><input id="f_unit" value="'+esc(p.unit)+'" placeholder="1 kg"/></div>'+
+    '<div class="field"><label class="lbl">'+t('expiry')+'</label><input id="f_exp" type="date" value="'+esc(p.expiry)+'"/></div></div>'+
+    '<div class="field"><label class="lbl">'+t('photo')+'</label><input id="f_photo" value="'+esc(p.photo&&p.photo.slice(0,5)!=='data:'?p.photo:'')+'" placeholder="https://..."/></div>'+
+    '<label style="display:flex;gap:8px;align-items:center;font-size:14px;margin-bottom:12px"><input type="checkbox" id="f_feat" style="width:auto"'+(p.featured?' checked':'')+'/> '+t('featured')+'</label>'+
+    '<button class="btn full" onclick="saveProduct()">'+t('save')+'</button>');
+}
+function saveProduct(){
+  var name=($('#f_name').value||'').trim();if(!name){toast(t('name')+'?');return}
+  if(curProd){
+    var p=(DATA.products||[]).filter(function(x){return x.id===curProd&&x.retailerId===myId()})[0];
+    if(!p){toast('Not allowed');return}
+    p.name=name;p.brand=($('#f_brand').value||'').trim();p.category=($('#f_cat').value||'').trim();
+    p.price=($('#f_price').value||'').trim();p.mrp=($('#f_mrp').value||'').trim();p.stock=($('#f_stock').value||'').trim();
+    p.unit=($('#f_unit').value||'').trim();p.expiry=($('#f_exp').value||'').trim();
+    if(($('#f_photo').value||'').trim())p.photo=($('#f_photo').value||'').trim();
+    p.featured=$('#f_feat').checked;p.updatedAt=nowISO();
+  }else{
+    DATA.products=DATA.products||[];
+    DATA.products.push({id:uid('p'),retailerId:myId(),createdAt:nowISO(),name:name,
+      brand:($('#f_brand').value||'').trim(),category:($('#f_cat').value||'').trim(),
+      price:($('#f_price').value||'').trim(),mrp:($('#f_mrp').value||'').trim(),stock:($('#f_stock').value||'').trim(),
+      unit:($('#f_unit').value||'').trim(),expiry:($('#f_exp').value||'').trim(),photo:($('#f_photo').value||'').trim(),
+      featured:$('#f_feat').checked,available:true,gst:'',barcode:'',hsn:'',batch:'',cost:'',supplier:'',tags:'',desc:''});
+  }
+  saveLocal();closeSheet();renderProducts();toast(t('saved')+' \u2014 '+t('pushNow'));
+}
+function removeProduct(id){
+  if(!confirm(t('confirmDel')))return;
+  DATA.products=(DATA.products||[]).filter(function(p){return !(p.id===id&&p.retailerId===myId())});
+  saveLocal();renderProducts();
+}
+
+/* ============ SHOP INFO (apna hi) ============ */
+function renderShop(){
+  var r=ME;
+  $('#main').innerHTML='<div class="card"><h3>'+t('shop')+'</h3>'+
+   '<div class="field"><label class="lbl">'+t('shopName')+'</label><input id="s_name" value="'+esc(r.name)+'"/></div>'+
+   '<div class="field"><label class="lbl">'+t('tagline')+'</label><input id="s_tag" value="'+esc(r.tagline)+'"/></div>'+
+   '<div class="g2"><div class="field"><label class="lbl">'+t('phone')+'</label><input id="s_phone" value="'+esc(r.phone)+'"/></div>'+
+   '<div class="field"><label class="lbl">'+t('whatsapp')+'</label><input id="s_wa" value="'+esc(r.whatsapp)+'"/></div></div>'+
+   '<div class="field"><label class="lbl">'+t('upi')+'</label><input id="s_upi" value="'+esc(r.upi)+'"/></div>'+
+   '<div class="field"><label class="lbl">'+t('address')+'</label><textarea id="s_addr" rows="2">'+esc(r.address)+'</textarea></div>'+
+   '<div class="g3"><div class="field"><label class="lbl">'+t('hours')+'</label><input id="s_hours" value="'+esc(r.hours)+'"/></div>'+
+   '<div class="field"><label class="lbl">'+t('delivery')+' \u20B9</label><input id="s_del" value="'+esc(r.deliveryCharge)+'"/></div>'+
+   '<div class="field"><label class="lbl">Low stock</label><input id="s_low" value="'+esc(r.lowStock)+'"/></div></div>'+
+   '<div class="field"><label class="lbl">'+t('offerBanner')+'</label><input id="s_ban" value="'+esc(r.offerBanner)+'"/></div>'+
+   '<div class="field"><label class="lbl">'+t('deliveryNote')+'</label><input id="s_dnote" value="'+esc(r.deliveryNote)+'"/></div>'+
+   '<div class="field"><label class="lbl">'+t('categories')+'</label><input id="s_cats" value="'+esc((r.categories||[]).join(', '))+'"/></div>'+
+   '<button class="btn full" onclick="saveShop()">'+t('saveShop')+'</button>'+
+   '<div class="note" style="margin-top:12px">'+t('pushNote')+'</div></div>';
+}
+function saveShop(){
+  ME.name=($('#s_name').value||'').trim();ME.tagline=($('#s_tag').value||'').trim();
+  ME.phone=($('#s_phone').value||'').trim();ME.whatsapp=($('#s_wa').value||'').trim();
+  ME.upi=($('#s_upi').value||'').trim();ME.address=($('#s_addr').value||'').trim();
+  ME.hours=($('#s_hours').value||'').trim();ME.deliveryCharge=($('#s_del').value||'').trim();
+  ME.lowStock=num($('#s_low').value)||5;ME.offerBanner=($('#s_ban').value||'').trim();
+  ME.deliveryNote=($('#s_dnote').value||'').trim();
+  ME.categories=($('#s_cats').value||'').split(',').map(function(s){return s.trim()}).filter(Boolean);
+  saveLocal();render();toast(t('saved'));
+}
+
+/* ============ CLOUD ============ */
+function renderCloud(){
+  var h=CFG.token?CFG.token.slice(0,4)+'...'+CFG.token.slice(-4):'';
+  $('#main').innerHTML='<div class="card"><h3>'+t('cloud')+'</h3>'+
+   '<div class="note" style="margin-bottom:12px">Company aapko ek token dega. Usse aapke changes online jaate hain. Token sirf is phone me rehta hai.</div>'+
+   '<div class="g2"><div class="field"><label class="lbl">Owner</label><input id="c_owner" value="'+esc(CFG.owner)+'"/></div>'+
+   '<div class="field"><label class="lbl">Repo</label><input id="c_repo" value="'+esc(CFG.repo)+'"/></div></div>'+
+   '<div class="g2"><div class="field"><label class="lbl">Branch</label><input id="c_branch" value="'+esc(CFG.branch)+'"/></div>'+
+   '<div class="field"><label class="lbl">Path</label><input id="c_path" value="'+esc(CFG.path)+'"/></div></div>'+
+   '<div class="field"><label class="lbl">Token</label><input id="c_token" type="password" placeholder="'+(h||'ghp_...')+'" value="'+esc(CFG.token)+'"/></div>'+
+   '<div class="row"><button class="btn" onclick="saveCloud(1)">'+t('pushNow')+'</button>'+
+   '<button class="btn gray" onclick="saveCloud(0)">'+t('save')+'</button>'+
+   '<button class="btn g" onclick="pull()">Pull</button></div>'+
+   '<div class="note" style="margin-top:12px">Push karne par sirf aapke products aur aapki dukaan ki info update hoti hai \u2014 dusre retailer ka data nahi chhua jaata.</div></div>';
+}
+function saveCloud(doPush){
+  CFG.owner=$('#c_owner').value.trim();CFG.repo=$('#c_repo').value.trim();
+  CFG.branch=$('#c_branch').value.trim();CFG.path=$('#c_path').value.trim();
+  var tk=$('#c_token').value.trim();if(tk)CFG.token=tk;
+  saveCfg(); if(doPush)push(); else toast(t('saved'));
+}
+
+/* ============ SETTINGS ============ */
+function renderSettings(){
+  $('#main').innerHTML='<div class="card"><h3>'+t('settings')+'</h3>'+
+   '<div class="field"><label class="lbl">Code</label><input value="'+esc(ME.code||'')+'" disabled/></div>'+
+   '<div class="field"><label class="lbl">'+t('status')+'</label><input value="'+(ME.status==='blocked'?t('blocked'):t('active'))+'" disabled/></div>'+
+   '<div class="note">Code aur status sirf company badal sakti hai.</div>'+
+   '<button class="btn gray full" style="margin-top:12px" onclick="logout()">'+t('logout')+'</button></div>';
+}
+
+/* ============ sheet ============ */
+function openSheet(title,inner){
+  $('#sheet').innerHTML='<div class="sh"><b>'+esc(title)+'</b><button class="x" onclick="closeSheet()">\u2715</button></div><div class="in">'+inner+'</div>';
+  $('#ov').classList.remove('hidden');
+}
+function closeSheet(){$('#ov').classList.add('hidden');$('#sheet').innerHTML=''}
+$('#ov').addEventListener('click',function(e){if(e.target.id==='ov')closeSheet()});
+
+/* ============ boot ============ */
+document.documentElement.lang=(LANG==='hi'?'hi':'en');
+loadLocal();
+if(myId()&&DATA){ ME=rById(myId()); if(ME){ if(ME.status==='blocked')showBlocked(); else {$('#gate').classList.add('hidden');$('#app').classList.remove('hidden');render();} } }
+pull();
+setInterval(function(){if(!document.hidden)pull()},120000);
+</script>
+</body>
+</html>

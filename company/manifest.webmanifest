@@ -1,0 +1,19 @@
+{
+  "name": "Apni Dukaan Company",
+  "short_name": "Apni Dukaan Company",
+  "description": "Company panel - retailers aur public app control",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F1F3F6",
+  "theme_color": "#172337",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

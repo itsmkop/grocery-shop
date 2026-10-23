@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#172337"/>
+<title>Apni Dukaan — Company</title>
+<link rel="manifest" href="manifest.webmanifest"/>
+<style>
+:root{--blue:#2874F0;--dark:#172337;--green:#388E3C;--red:#E53935;--amber:#F59E0B;--bg:#F1F3F6;--card:#fff;--tx:#212121;--mut:#7a8291;--sep:#e6e9ee}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:Roboto,-apple-system,"Segoe UI","Noto Sans Devanagari",sans-serif;background:var(--bg);color:var(--tx);padding-bottom:76px;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit;padding:0}
+input,select,textarea{font:inherit;width:100%;border:1px solid var(--sep);background:#fff;border-radius:8px;padding:12px 13px;font-size:15px;color:var(--tx);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(40,116,240,.15)}
+.hidden{display:none!important}
+header.hd{position:sticky;top:0;z-index:30;background:var(--dark);color:#fff;padding:13px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+header.hd .ttl{font-size:16px;font-weight:700;letter-spacing:-.2px}
+header.hd .sub{font-size:11px;color:#9fb0c9;margin-top:1px}
+header.hd .st{margin-left:auto;font-size:11px;font-weight:700;border-radius:20px;padding:5px 10px;background:rgba(255,255,255,.14)}
+header.hd .st.ok{background:rgba(56,142,60,.9)}
+header.hd .st.err{background:rgba(229,57,53,.9)}
+main{max-width:900px;margin:0 auto;padding:12px 12px 0}
+.card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.card h3{margin:0 0 12px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card h3 .n{margin-left:auto;font-size:12px;color:var(--mut);font-weight:600}
+.row{display:flex;gap:9px;flex-wrap:wrap}
+.btn{background:var(--blue);color:#fff;font-weight:700;font-size:14px;border-radius:8px;padding:11px 16px}
+.btn.g{background:#eef4ff;color:var(--blue)}
+.btn.gray{background:#eef0f4;color:var(--tx)}
+.btn.red{background:#fdecec;color:var(--red)}
+.btn.grn{background:#e8f5e9;color:var(--green)}
+.btn.sm{padding:8px 12px;font-size:12.5px;border-radius:7px}
+.btn.full{width:100%;text-align:center;display:block}
+.field{margin-bottom:12px}
+.lbl{display:block;font-size:11.5px;color:var(--mut);margin:0 2px 6px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:520px){.g3{grid-template-columns:1fr 1fr}}
+.rl{border:1px solid var(--sep);border-radius:10px;padding:12px;margin-bottom:10px}
+.rl .top{display:flex;align-items:center;gap:8px}
+.rl .nm{font-weight:700;font-size:14.5px}
+.rl .meta{font-size:12px;color:var(--mut);margin-top:3px;line-height:1.5}
+.chip{font-size:10.5px;font-weight:800;border-radius:20px;padding:3px 9px;text-transform:uppercase;letter-spacing:.3px}
+.chip.on{background:#e8f5e9;color:var(--green)}
+.chip.off{background:#fdecec;color:var(--red)}
+.chip.pub{background:#eef4ff;color:var(--blue)}
+.chip.mut{background:#eef0f4;color:var(--mut)}
+.acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+.gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#172337,#2b3d5c);padding:24px}
+.gate .box{background:#fff;border-radius:16px;padding:26px 22px;width:100%;max-width:360px;text-align:center}
+.gate .box .e{font-size:44px}
+.gate h2{margin:10px 0 4px;font-size:20px}
+.gate p{margin:0 0 18px;font-size:13px;color:var(--mut)}
+nav.bn{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--sep);display:flex}
+nav.bn button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 9px;font-size:10px;font-weight:700;color:#7a8291}
+nav.bn button.on{color:var(--blue)}
+nav.bn button .ic{font-size:19px;line-height:1}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:16px 16px 0 0}
+.sh{position:sticky;top:0;background:#fff;display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--sep);z-index:2}
+.sh b{font-size:16px}
+.sh .x{margin-left:auto;width:32px;height:32px;border-radius:50%;background:#eef0f4;font-size:15px}
+.sheet .in{padding:16px}
+.note{font-size:12px;color:var(--mut);line-height:1.55}
+.empty{text-align:center;padding:28px 16px;color:var(--mut);font-size:13px}
+.empty .big{font-size:44px;margin-bottom:8px}
+.pr{border:1px solid var(--sep);border-radius:9px;padding:11px;display:flex;gap:10px;align-items:center;margin-bottom:9px}
+.pr .ph{width:46px;height:46px;border-radius:7px;border:1px solid var(--sep);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--mut);flex:0 0 auto;overflow:hidden}
+.pr .ph img{width:100%;height:100%;object-fit:contain}
+.pr .nm{font-weight:600;font-size:13.5px}
+.pr .mt{font-size:12px;color:var(--mut);margin-top:2px}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:rgba(0,0,0,.88);color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;z-index:90;opacity:0;transition:opacity .25s;max-width:86%;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="box">
+    <div class="e">&#127978;</div>
+    <h2>Company Panel</h2>
+    <p>Owner / distributor access</p>
+    <div class="field"><input id="g_pin" type="password" inputmode="numeric" placeholder="PIN" style="text-align:center;letter-spacing:4px"/></div>
+    <button class="btn full" onclick="gateGo()">Unlock</button>
+    <div class="note" style="margin-top:14px">Default PIN: 1234</div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <header class="hd">
+    <div><div class="ttl" id="hTitle">Company Panel</div><div class="sub" id="hSub">Apni Dukaan</div></div>
+    <span class="st" id="hStatus">Local</span>
+  </header>
+  <main id="main"></main>
+  <nav class="bn" id="bnav"></nav>
+</div>
+
+<div class="ov hidden" id="ov"><div class="sheet" id="sheet"></div></div>
+<div id="toast"></div>
+
+<script>
+/* ============ shared helpers ============ */
+var API='https://api.github.com';
+var CFG=Object.assign({owner:'itsmkop',repo:'grocery-shop',branch:'main',path:'data.json',token:''},
+  JSON.parse(localStorage.getItem('gs_cloud')||'{}'));
+var DATA=null, tab='retailers', editingId=null, prodRetailer=null, curProd=null;
+function $(s){return document.querySelector(s)}
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function num(n){var x=Number(n);return isNaN(x)?0:x}
+function toast(m){var el=$('#toast');el.textContent=m;el.style.opacity='1';clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0'},1900)}
+function saveCfg(){localStorage.setItem('gs_cloud',JSON.stringify(CFG))}
+function saveLocal(){try{localStorage.setItem('gs_data',JSON.stringify(DATA))}catch(e){toast('Storage full')}}
+function loadLocal(){try{DATA=JSON.parse(localStorage.getItem('gs_data'))||null}catch(e){DATA=null}}
+function b64(s){return btoa(unescape(encodeURIComponent(s)))}
+function setStatus(t,cls){var e=$('#hStatus');e.textContent=t;e.className='st'+(cls?' '+cls:'')}
+function uid(p){return (p||'x')+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36)}
+function nowISO(){return new Date().toISOString()}
+function companyPin(){return (DATA&&DATA.company&&DATA.company.pin)||'1234'}
+
+async function pull(){
+  setStatus('Loading...');
+  try{
+    var u='https://raw.githubusercontent.com/'+CFG.owner+'/'+CFG.repo+'/'+CFG.branch+'/'+CFG.path+'?t='+Date.now();
+    var r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
+    DATA=await r.json();saveLocal();setStatus('Online','ok');render();
+  }catch(e){setStatus('Offline','err');toast('Pull failed: '+e.message)}
+}
+async function push(){
+  if(!CFG.token){toast('Cloud tab me GitHub token daalo');tab='cloud';render();return}
+  setStatus('Saving...');
+  try{
+    DATA.meta=DATA.meta||{};DATA.meta.updatedAt=nowISO();
+    var url=API+'/repos/'+CFG.owner+'/'+CFG.repo+'/contents/'+CFG.path;
+    var h={'Authorization':'token '+CFG.token,'Accept':'application/vnd.github+json'};
+    var g=await fetch(url+'?ref='+CFG.branch,{headers:h});
+    var sha=g.ok?(await g.json()).sha:null;
+    var body={message:'Company update '+nowISO(),content:b64(JSON.stringify(DATA)),branch:CFG.branch};
+    if(sha)body.sha=sha;
+    var p=await fetch(url,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},h),body:JSON.stringify(body)});
+    if(!p.ok){var e=await p.json().catch(function(){return{}});throw new Error(e.message||('HTTP '+p.status))}
+    saveLocal();setStatus('Saved','ok');toast('Online save ho gaya');
+  }catch(e){setStatus('Save failed','err');toast('Push failed: '+e.message)}
+}
+
+/* ============ data access ============ */
+function retailers(){return (DATA&&DATA.retailers)||[]}
+function rById(id){return retailers().filter(function(r){return r.id===id})[0]}
+function productsOf(id){return ((DATA&&DATA.products)||[]).filter(function(p){return p.retailerId===id})}
+function publicId(){return (DATA&&DATA.publicRetailerId)||(retailers()[0]&&retailers()[0].id)||''}
+
+/* ============ gate ============ */
+function gateGo(){
+  var v=($('#g_pin').value||'').trim();
+  if(!DATA){toast('Data load ho raha hai...');return}
+  if(v!==companyPin()){toast('Galat PIN');return}
+  localStorage.setItem('gs_company_ok','1');
+  $('#gate').classList.add('hidden');$('#app').classList.remove('hidden');
+  render();
+}
+if(localStorage.getItem('gs_company_ok')==='1'){
+  // will reveal after data loads
+  window._skipGate=true;
+}
+
+/* ============ nav ============ */
+function renderNav(){
+  var items=[['retailers','\uD83C\uDFEA','Retailers'],['public','\uD83D\uDCF1','Public App'],['products','\uD83D\uDCE6','Products'],['cloud','\u2601\uFE0F','Cloud'],['settings','\u2699\uFE0F','Settings']];
+  $('#bnav').innerHTML=items.map(function(it){
+    return '<button class="'+(tab===it[0]?'on':'')+'" data-t="'+it[0]+'"><span class="ic">'+it[1]+'</span>'+it[2]+'</button>';
+  }).join('');
+  [].forEach.call($('#bnav').children,function(b){b.onclick=function(){tab=b.getAttribute('data-t');render()}});
+}
+function render(){
+  if(!DATA){return}
+  renderNav();
+  if(tab==='public')renderPublic();
+  else if(tab==='products')renderProducts();
+  else if(tab==='cloud')renderCloud();
+  else if(tab==='settings')renderSettings();
+  else renderRetailers();
+}
+
+/* ============ RETAILERS ============ */
+function renderRetailers(){
+  var pid=publicId();
+  var html='<div class="card"><h3>Retailers <span class="n">'+retailers().length+' total</span></h3>';
+  html+='<button class="btn full" onclick="editRetailer(null)">+ Add retailer</button></div>';
+  if(!retailers().length){html+='<div class="card"><div class="empty"><div class="big">&#127978;</div>Koi retailer nahi. Add karo.</div></div>'}
+  retailers().forEach(function(r){
+    var np=productsOf(r.id).length;
+    html+='<div class="card"><div class="rl" style="border:0;padding:0">'+
+      '<div class="top"><div class="nm">'+esc(r.name||'(no name)')+'</div>'+
+      '<span class="chip '+(r.status==='blocked'?'off':'on')+'">'+(r.status==='blocked'?'Blocked':'Active')+'</span>'+
+      (r.id===pid?'<span class="chip pub">Public</span>':'')+'</div>'+
+      '<div class="meta">Code: <b>'+esc(r.code||'-')+'</b> &middot; '+np+' products'+(r.phone?'<br>'+esc(r.phone):'')+(r.address?'<br>'+esc(r.address):'')+'</div>'+
+      '<div class="acts">'+
+        '<button class="btn g sm" onclick="editRetailer(\''+r.id+'\')">Edit</button>'+
+        '<button class="btn gray sm" onclick="toggleBlock(\''+r.id+'\')">'+(r.status==='blocked'?'Unblock':'Block')+'</button>'+
+        (r.id===pid?'':'<button class="btn grn sm" onclick="makePublic(\''+r.id+'\')">Make public</button>')+
+        '<button class="btn red sm" onclick="removeRetailer(\''+r.id+'\')">Remove</button>'+
+      '</div></div></div>';
+  });
+  $('#main').innerHTML=html;
+}
+function editRetailer(id){
+  editingId=id;
+  var r=id?rById(id):{code:'',pin:'1234',name:'',owner:'',phone:'',whatsapp:'',address:'',tagline:'',upi:'',gstin:'',hours:'',status:'active'};
+  openSheet((id?'Edit':'Add')+' retailer',
+    '<div class="field"><label class="lbl">Shop name</label><input id="r_name" value="'+esc(r.name)+'"/></div>'+
+    '<div class="g2"><div class="field"><label class="lbl">Retailer code</label><input id="r_code" value="'+esc(r.code)+'" placeholder="MK01"/></div>'+
+    '<div class="field"><label class="lbl">Login PIN</label><input id="r_pin" value="'+esc(r.pin||'1234')+'"/></div></div>'+
+    '<div class="g2"><div class="field"><label class="lbl">Owner</label><input id="r_owner" value="'+esc(r.owner)+'"/></div>'+
+    '<div class="field"><label class="lbl">Phone</label><input id="r_phone" value="'+esc(r.phone)+'"/></div></div>'+
+    '<div class="field"><label class="lbl">WhatsApp</label><input id="r_wa" value="'+esc(r.whatsapp||r.phone||'')+'"/></div>'+
+    '<div class="field"><label class="lbl">Address</label><textarea id="r_addr" rows="2">'+esc(r.address)+'</textarea></div>'+
+    '<div class="field"><label class="lbl">Tagline</label><input id="r_tag" value="'+esc(r.tagline)+'"/></div>'+
+    '<div class="field"><label class="lbl">Note (internal)</label><input id="r_note" value="'+esc(r.note||'')+'"/></div>'+
+    '<button class="btn full" onclick="saveRetailer()">Save</button>');
+}
+function saveRetailer(){
+  var name=($('#r_name').value||'').trim();
+  var code=($('#r_code').value||'').trim().toUpperCase();
+  if(!name){toast('Shop name chahiye');return}
+  if(!code){toast('Code chahiye');return}
+  var dup=retailers().filter(function(r){return r.code===code&&r.id!==editingId})[0];
+  if(dup){toast('Ye code already use me hai');return}
+  if(editingId){
+    var r=rById(editingId);
+    r.name=name;r.code=code;r.pin=($('#r_pin').value||'1234').trim();r.owner=($('#r_owner').value||'').trim();
+    r.phone=($('#r_phone').value||'').trim();r.whatsapp=($('#r_wa').value||'').trim();r.address=($('#r_addr').value||'').trim();
+    r.tagline=($('#r_tag').value||'').trim();r.note=($('#r_note').value||'').trim();
+  }else{
+    var nr={id:uid('r'),code:code,pin:($('#r_pin').value||'1234').trim(),status:'active',name:name,
+      owner:($('#r_owner').value||'').trim(),phone:($('#r_phone').value||'').trim(),whatsapp:($('#r_wa').value||'').trim(),
+      address:($('#r_addr').value||'').trim(),tagline:($('#r_tag').value||'').trim(),note:($('#r_note').value||'').trim(),
+      upi:'',gstin:'',hours:'',logo:'',currency:'\u20B9',lowStock:5,expiryDays:30,categories:[],
+      offerBanner:'',deliveryNote:'',deliveryCharge:'',orderWebhook:'',ordersUrl:'',createdAt:nowISO()};
+    DATA.retailers=DATA.retailers||[];DATA.retailers.push(nr);
+    if(!DATA.publicRetailerId)DATA.publicRetailerId=nr.id;
+  }
+  saveLocal();closeSheet();render();toast('Saved (Cloud tab se online push karo)');
+}
+function toggleBlock(id){var r=rById(id);r.status=(r.status==='blocked'?'active':'blocked');saveLocal();render()}
+function makePublic(id){DATA.publicRetailerId=id;saveLocal();render();toast('Public app ab is dukaan ko dikhayega')}
+function removeRetailer(id){
+  var r=rById(id);if(!r)return;
+  if(!confirm('Remove "'+r.name+'"? Uske saare products bhi hat jayenge.'))return;
+  DATA.retailers=retailers().filter(function(x){return x.id!==id});
+  DATA.products=(DATA.products||[]).filter(function(p){return p.retailerId!==id});
+  if(DATA.publicRetailerId===id)DATA.publicRetailerId=(retailers()[0]&&retailers()[0].id)||'';
+  saveLocal();render();toast('Retailer removed');
+}
+
+/* ============ PUBLIC APP ============ */
+function renderPublic(){
+  var pid=publicId();
+  if(!retailers().length){$('#main').innerHTML='<div class="card"><div class="empty">Pehle retailer add karo.</div></div>';return}
+  var r=rById(pid)||retailers()[0];
+  var html='<div class="card"><h3>Public app kaun dikhaye</h3>'+
+    '<div class="note" style="margin-bottom:10px">Public app (grahak wala) is dukaan ki rates aur stock dikhata hai.</div>'+
+    '<select id="pubSel">'+retailers().map(function(x){
+      return '<option value="'+x.id+'"'+(x.id===pid?' selected':'')+'>'+esc(x.name)+(x.status==='blocked'?' (blocked)':'')+'</option>';
+    }).join('')+'</select>'+
+    '<button class="btn full" style="margin-top:11px" onclick="DATA.publicRetailerId=$(\'#pubSel\').value;saveLocal();render();toast(\'Public app updated\')">Set as live</button></div>';
+  html+='<div class="card"><h3>Shop info &middot; '+esc(r.name)+'</h3>'+
+    '<div class="field"><label class="lbl">Shop name</label><input id="p_name" value="'+esc(r.name)+'"/></div>'+
+    '<div class="field"><label class="lbl">Tagline</label><input id="p_tag" value="'+esc(r.tagline)+'"/></div>'+
+    '<div class="g2"><div class="field"><label class="lbl">Phone</label><input id="p_phone" value="'+esc(r.phone)+'"/></div>'+
+    '<div class="field"><label class="lbl">WhatsApp</label><input id="p_wa" value="'+esc(r.whatsapp)+'"/></div></div>'+
+    '<div class="field"><label class="lbl">UPI ID</label><input id="p_upi" value="'+esc(r.upi)+'"/></div>'+
+    '<div class="field"><label class="lbl">Address</label><textarea id="p_addr" rows="2">'+esc(r.address)+'</textarea></div>'+
+    '<div class="g3"><div class="field"><label class="lbl">Hours</label><input id="p_hours" value="'+esc(r.hours)+'"/></div>'+
+    '<div class="field"><label class="lbl">Delivery \u20B9</label><input id="p_del" value="'+esc(r.deliveryCharge)+'"/></div>'+
+    '<div class="field"><label class="lbl">Low stock</label><input id="p_low" value="'+esc(r.lowStock)+'"/></div></div>'+
+    '<div class="field"><label class="lbl">Offer banner</label><input id="p_ban" value="'+esc(r.offerBanner)+'"/></div>'+
+    '<div class="field"><label class="lbl">Delivery note</label><input id="p_dnote" value="'+esc(r.deliveryNote)+'"/></div>'+
+    '<div class="field"><label class="lbl">Categories (comma se)</label><input id="p_cats" value="'+esc((r.categories||[]).join(', '))+'"/></div>'+
+    '<button class="btn full" onclick="savePublic()">Save shop info</button></div>';
+  $('#main').innerHTML=html;
+}
+function savePublic(){
+  var r=rById(publicId())||retailers()[0];if(!r)return;
+  r.name=($('#p_name').value||'').trim();r.tagline=($('#p_tag').value||'').trim();
+  r.phone=($('#p_phone').value||'').trim();r.whatsapp=($('#p_wa').value||'').trim();
+  r.upi=($('#p_upi').value||'').trim();r.address=($('#p_addr').value||'').trim();
+  r.hours=($('#p_hours').value||'').trim();r.deliveryCharge=($('#p_del').value||'').trim();
+  r.lowStock=num($('#p_low').value)||5;r.offerBanner=($('#p_ban').value||'').trim();
+  r.deliveryNote=($('#p_dnote').value||'').trim();
+  r.categories=($('#p_cats').value||'').split(',').map(function(s){return s.trim()}).filter(Boolean);
+  saveLocal();render();toast('Shop info saved');
+}
+
+/* ============ PRODUCTS ============ */
+function renderProducts(){
+  if(!retailers().length){$('#main').innerHTML='<div class="card"><div class="empty">Pehle retailer add karo.</div></div>';return}
+  if(!prodRetailer)prodRetailer=publicId()||retailers()[0].id;
+  var r=rById(prodRetailer)||retailers()[0];
+  var ps=productsOf(r.id);
+  var html='<div class="card"><h3>Products <span class="n">'+ps.length+'</span></h3>'+
+    '<div class="field"><label class="lbl">Retailer</label><select id="pSel" onchange="prodRetailer=this.value;renderProducts()">'+
+    retailers().map(function(x){return '<option value="'+x.id+'"'+(x.id===r.id?' selected':'')+'>'+esc(x.name)+'</option>'}).join('')+'</select></div>'+
+    '<button class="btn full" onclick="editProduct(null)">+ Add product for '+esc(r.name)+'</button></div>';
+  if(!ps.length){html+='<div class="card"><div class="empty"><div class="big">&#128230;</div>Is retailer ke products khaali hain.</div></div>'}
+  ps.forEach(function(p){
+    html+='<div class="card"><div class="pr">'+
+      '<div class="ph">'+(p.photo?'<img src="'+esc(p.photo)+'"/>':'\uD83D\uDED2')+'</div>'+
+      '<div style="flex:1;min-width:0"><div class="nm">'+esc(p.name)+'</div>'+
+      '<div class="mt">'+esc(p.unit||'')+(p.brand?' \u00B7 '+esc(p.brand):'')+' \u00B7 \u20B9'+esc(p.price)+(num(p.mrp)>num(p.price)?' (MRP '+esc(p.mrp)+')':'')+' \u00B7 stock '+esc(p.stock==null?'':p.stock)+'</div></div>'+
+      '<div style="display:flex;flex-direction:column;gap:6px"><button class="btn g sm" onclick="editProduct(\''+p.id+'\')">Edit</button><button class="btn red sm" onclick="removeProduct(\''+p.id+'\')">Del</button></div>'+
+    '</div></div>';
+  });
+  $('#main').innerHTML=html;
+}
+function editProduct(id){
+  curProd=id;
+  var p=id?(DATA.products||[]).filter(function(x){return x.id===id})[0]:{};
+  openSheet((id?'Edit':'Add')+' product',
+    '<div class="field"><label class="lbl">Name</label><input id="f_name" value="'+esc(p.name)+'"/></div>'+
+    '<div class="g2"><div class="field"><label class="lbl">Brand</label><input id="f_brand" value="'+esc(p.brand)+'"/></div>'+
+    '<div class="field"><label class="lbl">Category</label><input id="f_cat" value="'+esc(p.category)+'"/></div></div>'+
+    '<div class="g3"><div class="field"><label class="lbl">Price \u20B9</label><input id="f_price" inputmode="numeric" value="'+esc(p.price)+'"/></div>'+
+    '<div class="field"><label class="lbl">MRP \u20B9</label><input id="f_mrp" inputmode="numeric" value="'+esc(p.mrp)+'"/></div>'+
+    '<div class="field"><label class="lbl">Stock</label><input id="f_stock" inputmode="numeric" value="'+esc(p.stock)+'"/></div></div>'+
+    '<div class="g2"><div class="field"><label class="lbl">Unit</label><input id="f_unit" value="'+esc(p.unit)+'" placeholder="1 kg"/></div>'+
+    '<div class="field"><label class="lbl">Expiry</label><input id="f_exp" type="date" value="'+esc(p.expiry)+'"/></div></div>'+
+    '<div class="field"><label class="lbl">Photo URL (optional)</label><input id="f_photo" value="'+esc(p.photo&&p.photo.slice(0,5)!=='data:'?p.photo:'')+'" placeholder="https://..."/></div>'+
+    '<label style="display:flex;gap:8px;align-items:center;font-size:14px;margin-bottom:12px"><input type="checkbox" id="f_feat" style="width:auto"'+(p.featured?' checked':'')+'/> Featured</label>'+
+    '<button class="btn full" onclick="saveProduct()">Save product</button>');
+}
+function saveProduct(){
+  var name=($('#f_name').value||'').trim();if(!name){toast('Name chahiye');return}
+  var rid=prodRetailer||publicId();
+  if(curProd){
+    var p=(DATA.products||[]).filter(function(x){return x.id===curProd})[0];
+    p.name=name;p.brand=($('#f_brand').value||'').trim();p.category=($('#f_cat').value||'').trim();
+    p.price=($('#f_price').value||'').trim();p.mrp=($('#f_mrp').value||'').trim();p.stock=($('#f_stock').value||'').trim();
+    p.unit=($('#f_unit').value||'').trim();p.expiry=($('#f_exp').value||'').trim();
+    if(($('#f_photo').value||'').trim())p.photo=($('#f_photo').value||'').trim();
+    p.featured=$('#f_feat').checked;p.updatedAt=nowISO();
+  }else{
+    var np={id:uid('p'),retailerId:rid,createdAt:nowISO(),name:name,
+      brand:($('#f_brand').value||'').trim(),category:($('#f_cat').value||'').trim(),
+      price:($('#f_price').value||'').trim(),mrp:($('#f_mrp').value||'').trim(),stock:($('#f_stock').value||'').trim(),
+      unit:($('#f_unit').value||'').trim(),expiry:($('#f_exp').value||'').trim(),photo:($('#f_photo').value||'').trim(),
+      featured:$('#f_feat').checked,available:true,gst:'',barcode:'',hsn:'',batch:'',cost:'',supplier:'',tags:'',desc:''};
+    DATA.products=DATA.products||[];DATA.products.push(np);
+  }
+  saveLocal();closeSheet();renderProducts();toast('Saved');
+}
+function removeProduct(id){
+  if(!confirm('Product delete karein?'))return;
+  DATA.products=(DATA.products||[]).filter(function(p){return p.id!==id});
+  saveLocal();renderProducts();
+}
+
+/* ============ CLOUD ============ */
+function renderCloud(){
+  var h=CFG.token?CFG.token.slice(0,4)+'...'+CFG.token.slice(-4):'';
+  $('#main').innerHTML='<div class="card"><h3>Cloud sync (GitHub)</h3>'+
+    '<div class="note" style="margin-bottom:12px">Data GitHub repo me rehta hai. Token sirf is phone me save hota hai.</div>'+
+    '<div class="g2"><div class="field"><label class="lbl">Owner</label><input id="c_owner" value="'+esc(CFG.owner)+'"/></div>'+
+    '<div class="field"><label class="lbl">Repo</label><input id="c_repo" value="'+esc(CFG.repo)+'"/></div></div>'+
+    '<div class="g2"><div class="field"><label class="lbl">Branch</label><input id="c_branch" value="'+esc(CFG.branch)+'"/></div>'+
+    '<div class="field"><label class="lbl">Path</label><input id="c_path" value="'+esc(CFG.path)+'"/></div></div>'+
+    '<div class="field"><label class="lbl">GitHub token</label><input id="c_token" type="password" placeholder="'+(h||'ghp_...')+'" value="'+esc(CFG.token)+'"/></div>'+
+    '<div class="row"><button class="btn" onclick="saveCloud()">Save &amp; Push</button>'+
+    '<button class="btn gray" onclick="saveCloudOnly()">Save only</button>'+
+    '<button class="btn g" onclick="pull()">Pull from cloud</button></div>'+
+    '<div class="note" style="margin-top:14px">Token banane ke liye: github.com/settings/tokens &rarr; Fine-grained / classic with repo contents write.</div></div>'+
+    '<div class="card"><h3>Local data</h3><div class="note">Retailers: '+retailers().length+' &middot; Products: '+((DATA&&DATA.products)||[]).length+'</div>'+
+    '<button class="btn gray full" style="margin-top:11px" onclick="exportJson()">Export data.json</button></div>';
+}
+function saveCloud(){
+  CFG.owner=$('#c_owner').value.trim();CFG.repo=$('#c_repo').value.trim();
+  CFG.branch=$('#c_branch').value.trim();CFG.path=$('#c_path').value.trim();
+  var t=$('#c_token').value.trim();if(t)CFG.token=t;
+  saveCfg();push();
+}
+function saveCloudOnly(){
+  CFG.owner=$('#c_owner').value.trim();CFG.repo=$('#c_repo').value.trim();
+  CFG.branch=$('#c_branch').value.trim();CFG.path=$('#c_path').value.trim();
+  var t=$('#c_token').value.trim();if(t)CFG.token=t;
+  saveCfg();toast('Cloud settings saved');
+}
+function exportJson(){
+  var b=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='data.json';a.click();
+  try{Android.saveFile('data.json',JSON.stringify(DATA,null,2))}catch(e){}
+}
+
+/* ============ SETTINGS ============ */
+function renderSettings(){
+  $('#main').innerHTML='<div class="card"><h3>Company settings</h3>'+
+    '<div class="field"><label class="lbl">Company name</label><input id="s_cname" value="'+esc((DATA.company||{}).name||'')+'"/></div>'+
+    '<div class="field"><label class="lbl">New company PIN</label><input id="s_pin" value="'+esc(companyPin())+'"/></div>'+
+    '<button class="btn full" onclick="saveSettings()">Save</button></div>'+
+    '<div class="card"><h3>Session</h3><button class="btn gray full" onclick="lockApp()">Lock app</button></div>'+
+    '<div class="card"><h3>Roles</h3><div class="note">Company app: retailers control + public app management.<br>Retailer app: shop owner apne products manage karta hai (dusre retailer ke products nahi dikhte).<br>Public app: grahak.</div></div>';
+}
+function saveSettings(){
+  DATA.company=DATA.company||{};
+  DATA.company.name=($('#s_cname').value||'').trim();
+  DATA.company.pin=($('#s_pin').value||'1234').trim();
+  saveLocal();toast('Saved');
+}
+function lockApp(){localStorage.removeItem('gs_company_ok');location.reload()}
+
+/* ============ sheet ============ */
+function openSheet(title,inner){
+  $('#sheet').innerHTML='<div class="sh"><b>'+esc(title)+'</b><button class="x" onclick="closeSheet()">\u2715</button></div><div class="in">'+inner+'</div>';
+  $('#ov').classList.remove('hidden');
+}
+function closeSheet(){$('#ov').classList.add('hidden');$('#sheet').innerHTML=''}
+$('#ov').addEventListener('click',function(e){if(e.target.id==='ov')closeSheet()});
+
+/* ============ boot ============ */
+loadLocal();
+if(!DATA){DATA={meta:{version:2},company:{name:'Apni Dukaan',pin:'1234'},publicRetailerId:'',retailers:[],products:[]}}
+pull();
+setInterval(function(){if(!document.hidden)pull()},120000);
+if(window._skipGate){$('#gate').classList.add('hidden');$('#app').classList.remove('hidden');}
+</script>
+</body>
+</html>
