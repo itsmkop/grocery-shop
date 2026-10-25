@@ -1,0 +1,31 @@
+name: site-diag
+
+# Ye workflow GitHub ke server se site check karta hai (read-only).
+# Sandbox se hosting reach nahi hoti, isliye ye channel use karte hain.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/site-diag.yml'
+
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DNS check
+        run: |
+          echo "===== DNS ====="
+          for h in nerox.in manjeet.nerox.in www.manjeet.nerox.in; do
+            printf "%-24s -> " "$h"
+            python3 -c "import socket,sys;print(socket.gethostbyname_ex(sys.argv[1])[2])" "$h" 2>&1 | tail -1
+          done
+      - name: HTTP check
+        run: |
+          echo "===== HTTP ====="
+          for u in "https://manjeet.nerox.in/" "https://manjeet.nerox.in/api/ping.php" "https://manjeet.nerox.in/api/dbcheck.php" "https://manjeet.nerox.in/company/"; do
+            echo "--- $u ---"
+            curl -sS -m 25 -o /tmp/b -w "HTTP %{http_code}\n" "$u" || echo "(curl fail)"
+            head -c 400 /tmp/b 2>/dev/null || true
+            echo
+          done
